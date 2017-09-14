@@ -1,0 +1,25 @@
+digraph SymTable {
+	graph [rankdir="LR"];
+	node [shape=record];
+	0 [label=" <f0> Scope | <f1> mDict\[test\] "];
+	0:<f1> -> 1:<f0>;
+	1 [label=" <f0> ClassSTE | <f1> mName = test| <f2> mMain = false| <f3> mSuperClass = null| <f4> mScope "];
+	1:<f4> -> 2:<f0>;
+	2 [label=" <f0> Scope | <f1> mDict\[x\] | <f2> mDict\[y\] | <f3> mDict\[getX\] | <f4> mDict\[getY\] "];
+	2:<f1> -> 3:<f0>;
+	3 [label=" <f0> VarSTE | <f1> mName = x| <f2> mType = BYTE| <f3> mBase = INVALID| <f4> mOffset = 0"];
+	2:<f2> -> 4:<f0>;
+	4 [label=" <f0> VarSTE | <f1> mName = y| <f2> mType = BYTE| <f3> mBase = INVALID| <f4> mOffset = 0"];
+	2:<f3> -> 5:<f0>;
+	5 [label=" <f0> MethodSTE | <f1> mName = getX| <f2> mSignature = () returns BYTE| <f3> mScope "];
+	5:<f3> -> 6:<f0>;
+	6 [label=" <f0> Scope | <f1> mDict\[this\] "];
+	6:<f1> -> 7:<f0>;
+	7 [label=" <f0> VarSTE | <f1> mName = this| <f2> mType = class_test;| <f3> mBase = INVALID| <f4> mOffset = 0"];
+	2:<f4> -> 8:<f0>;
+	8 [label=" <f0> MethodSTE | <f1> mName = getY| <f2> mSignature = () returns BYTE| <f3> mScope "];
+	8:<f3> -> 9:<f0>;
+	9 [label=" <f0> Scope | <f1> mDict\[this\] "];
+	9:<f1> -> 10:<f0>;
+	10 [label=" <f0> VarSTE | <f1> mName = this| <f2> mType = class_test;| <f3> mBase = INVALID| <f4> mOffset = 0"];
+}

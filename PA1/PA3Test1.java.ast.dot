@@ -1,0 +1,41 @@
+digraph ASTGraph {
+0 [ label="Program" ];
+1 [ label="MainClass" ];
+0 -> 1
+2 [ label="BlockStatement" ];
+1 -> 2
+3 [ label="IfStatement" ];
+2 -> 3
+4 [ label="MeggyCheckButton" ];
+3 -> 4
+5 [ label="ButtonLiteral\nMeggy.Button.Up" ];
+4 -> 5
+6 [ label="BlockStatement" ];
+3 -> 6
+7 [ label="MeggySetPixel" ];
+6 -> 7
+8 [ label="ByteCast" ];
+7 -> 8
+9 [ label="IntLiteral\n3" ];
+8 -> 9
+10 [ label="ByteCast" ];
+7 -> 10
+11 [ label="IntLiteral\n4" ];
+10 -> 11
+12 [ label="ColorLiteral\nMeggy.Color.BLUE" ];
+7 -> 12
+13 [ label="BlockStatement" ];
+3 -> 13
+14 [ label="MeggySetPixel" ];
+13 -> 14
+15 [ label="ByteCast" ];
+14 -> 15
+16 [ label="IntLiteral\n3" ];
+15 -> 16
+17 [ label="ByteCast" ];
+14 -> 17
+18 [ label="IntLiteral\n4" ];
+17 -> 18
+19 [ label="ColorLiteral\nMeggy.Color.RED" ];
+14 -> 19
+}
