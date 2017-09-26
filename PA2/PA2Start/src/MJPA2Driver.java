@@ -16,12 +16,12 @@ public class MJPA2Driver {
           System.err.println(
             "MJPA2: Specify input file in program arguments");
       }
-     
-      public static void main(String args[]) 
+
+      public static void main(String args[])
       {
-        
+
         if(args.length < 1)
-        {         
+        {
             usage();
             System.exit(1);
         }
@@ -30,27 +30,34 @@ public class MJPA2Driver {
         String filename = args[args.length-1];
 
         try {
-          // construct the lexer, 
+          // construct the lexer,
           // the lexer will be the same for all of the parsers
           Yylex lexer = new Yylex(new FileReader(filename));
-          
-          // Exercise the lexer: print out all of the tokens 
+
+          // Exercise the lexer: print out all of the tokens
           java_cup.runtime.Symbol symbol = lexer.next_token();
           while (symbol.sym != sym.EOF) {
               System.out.print("symbol: " + symbol + "  symbolValue: ");
               if(symbol.value!=null) {
                 SymbolValue symval = (SymbolValue)symbol.value;
-                System.out.println(" [" + symval.lexeme + "]" + symval.line);
+                int value = 0;
+                try {
+                  value = Integer.parseInt(symval.toString());
+                }
+                catch (NumberFormatException e) {
+                  value = -1;
+                }
+                System.out.println(" [" + symval.lexeme + " at (" + symval.line + ", " + symval.pos + ")" +" value: " +  value + "]");
               } else {
                 System.out.println(" null value");
               }
               symbol = lexer.next_token();
           }
-          
+
         }catch (Exception e) {
             e.printStackTrace();
             System.exit(1);
-        }  
+        }
       }
 
 }
