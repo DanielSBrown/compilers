@@ -42,12 +42,12 @@ public class MJPA2Driver {
                 SymbolValue symval = (SymbolValue)symbol.value;
                 int value = 0;
                 try {
-                  value = Integer.parseInt(symval.toString());
+                  symval.value = Integer.parseInt(symval.toString());
                 }
                 catch (NumberFormatException e) {
-                  value = -1;
+                  symval.value = -1;
                 }
-                System.out.println(" [" + symval.lexeme + " at (" + symval.line + ", " + symval.pos + ")" +" value: " +  value + "]");
+                System.out.println(" [" + symval.lexeme + " at (" + symval.line + ", " + symval.pos + ")" +" value: " +  symval.value + "]");
               } else {
                 System.out.println(" null value");
               }
