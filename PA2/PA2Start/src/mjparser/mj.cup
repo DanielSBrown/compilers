@@ -142,6 +142,7 @@ main_class ::=
           :}
         statement_list:list RBRACE
           {:
+          parser.out.println(list);
           :}
         RBRACE
           {:
