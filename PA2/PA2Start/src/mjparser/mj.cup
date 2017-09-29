@@ -14,30 +14,30 @@ import java.io.FileNotFoundException;
 
 parser code {:
 
-    public PrintWriter out; 
-    
+    public PrintWriter out;
+
     public String programName;
 
     public void unrecovered_syntax_error(Symbol cur_SymbolValue) {
         report_fatal_error("Fatal syntax error", cur_SymbolValue);
     }
-    
+
     public void report_fatal_error(String message, Object info) {
         report_error(message, info);
         done_parsing();
         Symbol SymbolValue = (Symbol)info;
         mjparser.SymbolValue tok = (mjparser.SymbolValue)SymbolValue.value;
-        throw new mjparser.ParseException("Fatal parsing error", 
+        throw new mjparser.ParseException("Fatal parsing error",
                                           tok.line, tok.pos);
     }
-    
+
     public void report_error(String message, Object info) {
         Symbol SymbolValue = (Symbol)info;
         mjparser.SymbolValue tok = (mjparser.SymbolValue)SymbolValue.value;
-        System.err.println("[" + tok.line + "," + tok.pos + "] " 
+        System.err.println("[" + tok.line + "," + tok.pos + "] "
                                + message + " at " + tok.toString() );
     }
-            
+
 :}
 
 /* Notice: all terminals declared here */
@@ -93,34 +93,34 @@ precedence right UMINUS;
 /* Meggy Java Grammar */
 start with program;
 
-program ::= 
+program ::=
     IMPORT MEGGY SEMI main_class
     ;
-    
+
 main_class ::=
-        CLASS ID:name         
-            {: java.io.PrintStream sout 
+        CLASS ID:name
+            {: java.io.PrintStream sout
                     = new java.io.PrintStream(
                         new java.io.FileOutputStream(name.lexeme+".java.s"));
                 parser.out = new PrintWriter(sout);
                 // Check filename is class name, if not exit with error message
-                System.exit(0);   
+                System.exit(0);
             :}
-        LBRACE PUBLIC STATIC VOID MAIN 
+        LBRACE PUBLIC STATIC VOID MAIN
         LPAREN STRING LBRACKET RBRACKET ID:param RPAREN
-        LBRACE 
-          {: 
+        LBRACE
+          {:
             System.out.println("Generate prolog using avrH.rtl.s");
             InputStream mainPrologue=null;
             BufferedReader reader=null;
             try {
-                // The syntax for loading a text resource file 
+                // The syntax for loading a text resource file
                 // from a jar file here:
                 // http://www.rgagnon.com/javadetails/java-0077.html
-                mainPrologue 
+                mainPrologue
                     = this.getClass().getClassLoader().getResourceAsStream(
                         "avrH.rtl.s");
-                reader = new BufferedReader(new 
+                reader = new BufferedReader(new
                     InputStreamReader(mainPrologue));
 
                 String line = null;
@@ -143,9 +143,32 @@ main_class ::=
         statement_list:list RBRACE
           {:
           :}
-        RBRACE 
+        RBRACE
           {:
             parser.out.flush();
           :}
     ;
 
+    statement ::=
+        MEGGYSETPIXEL
+        LPAREN
+        exp:a
+        COMMA
+        exp:b
+        COMMA
+        exp:color
+        RPAREN
+        SEMI
+        ;
+    exp ::=
+        LPAREN
+        BYTE
+        RPAREN
+        exp
+        | INT_LITERAL
+        | COLOR_LITERAL
+        ;
+    statement_list ::=
+        statement:s
+        | statement_list statement:s
+    ;

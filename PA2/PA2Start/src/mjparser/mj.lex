@@ -119,6 +119,7 @@ SPACE = [\ \t]
 "Meggy.Color"      {return new Symbol(sym.MEGGYCOLOR,new SymbolValue(yyline+1, yychar+1, yytext()));}
 "Meggy.Tone"      {return new Symbol(sym.MEGGYTONE,new SymbolValue(yyline+1, yychar+1, yytext()));}
 
+
 "//".*      { }
 [/][*][^*]*[*]+([^*/][^*]*[*]+)*[/]       {  }
 {SPACE}     { }
