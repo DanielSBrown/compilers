@@ -18,8 +18,8 @@ main:
     call _Z18MeggyJrSimpleSetupv 
     /* Need to call this so that the meggy library gets set up */
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(2)
+	ldi	r25,hi8(2)
 	push	r25
 	push	r24
 
@@ -28,8 +28,8 @@ main:
 	pop	r25
 	push	r24
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(4)
+	ldi	r25,hi8(4)
 	push	r25
 	push	r24
 
@@ -52,8 +52,8 @@ main:
 	call	_Z12DisplaySlatev
 
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(2)
+	ldi	r25,hi8(2)
 	push	r25
 	push	r24
 
@@ -62,8 +62,8 @@ main:
 	pop	r25
 	push	r24
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(3)
+	ldi	r25,hi8(3)
 	push	r25
 	push	r24
 
@@ -86,8 +86,8 @@ main:
 	call	_Z12DisplaySlatev
 
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(1)
+	ldi	r25,hi8(1)
 	push	r25
 	push	r24
 
@@ -96,8 +96,8 @@ main:
 	pop	r25
 	push	r24
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(2)
+	ldi	r25,hi8(2)
 	push	r25
 	push	r24
 
@@ -120,8 +120,8 @@ main:
 	call	_Z12DisplaySlatev
 
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(0)
+	ldi	r25,hi8(0)
 	push	r25
 	push	r24
 
@@ -130,8 +130,8 @@ main:
 	pop	r25
 	push	r24
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(2)
+	ldi	r25,hi8(2)
 	push	r25
 	push	r24
 
@@ -154,8 +154,8 @@ main:
 	call	_Z12DisplaySlatev
 
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(0)
+	ldi	r25,hi8(0)
 	push	r25
 	push	r24
 
@@ -164,8 +164,8 @@ main:
 	pop	r25
 	push	r24
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(3)
+	ldi	r25,hi8(3)
 	push	r25
 	push	r24
 
@@ -188,8 +188,8 @@ main:
 	call	_Z12DisplaySlatev
 
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(1)
+	ldi	r25,hi8(1)
 	push	r25
 	push	r24
 
@@ -198,8 +198,8 @@ main:
 	pop	r25
 	push	r24
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(4)
+	ldi	r25,hi8(4)
 	push	r25
 	push	r24
 
@@ -222,8 +222,8 @@ main:
 	call	_Z12DisplaySlatev
 
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(3)
+	ldi	r25,hi8(3)
 	push	r25
 	push	r24
 
@@ -232,8 +232,8 @@ main:
 	pop	r25
 	push	r24
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(4)
+	ldi	r25,hi8(4)
 	push	r25
 	push	r24
 
@@ -256,8 +256,8 @@ main:
 	call	_Z12DisplaySlatev
 
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(4)
+	ldi	r25,hi8(4)
 	push	r25
 	push	r24
 
@@ -266,8 +266,8 @@ main:
 	pop	r25
 	push	r24
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(1)
+	ldi	r25,hi8(1)
 	push	r25
 	push	r24
 
@@ -290,8 +290,8 @@ main:
 	call	_Z12DisplaySlatev
 
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(5)
+	ldi	r25,hi8(5)
 	push	r25
 	push	r24
 
@@ -300,8 +300,8 @@ main:
 	pop	r25
 	push	r24
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(1)
+	ldi	r25,hi8(1)
 	push	r25
 	push	r24
 
@@ -324,8 +324,8 @@ main:
 	call	_Z12DisplaySlatev
 
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(5)
+	ldi	r25,hi8(5)
 	push	r25
 	push	r24
 
@@ -334,8 +334,8 @@ main:
 	pop	r25
 	push	r24
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(2)
+	ldi	r25,hi8(2)
 	push	r25
 	push	r24
 
@@ -358,8 +358,8 @@ main:
 	call	_Z12DisplaySlatev
 
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(4)
+	ldi	r25,hi8(4)
 	push	r25
 	push	r24
 
@@ -368,8 +368,8 @@ main:
 	pop	r25
 	push	r24
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(3)
+	ldi	r25,hi8(3)
 	push	r25
 	push	r24
 
@@ -392,8 +392,8 @@ main:
 	call	_Z12DisplaySlatev
 
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(3)
+	ldi	r25,hi8(3)
 	push	r25
 	push	r24
 
@@ -402,8 +402,8 @@ main:
 	pop	r25
 	push	r24
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(3)
+	ldi	r25,hi8(3)
 	push	r25
 	push	r24
 
@@ -426,8 +426,8 @@ main:
 	call	_Z12DisplaySlatev
 
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(3)
+	ldi	r25,hi8(3)
 	push	r25
 	push	r24
 
@@ -436,8 +436,8 @@ main:
 	pop	r25
 	push	r24
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(2)
+	ldi	r25,hi8(2)
 	push	r25
 	push	r24
 
@@ -460,8 +460,8 @@ main:
 	call	_Z12DisplaySlatev
 
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(3)
+	ldi	r25,hi8(3)
 	push	r25
 	push	r24
 
@@ -470,8 +470,8 @@ main:
 	pop	r25
 	push	r24
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(5)
+	ldi	r25,hi8(5)
 	push	r25
 	push	r24
 
@@ -494,8 +494,8 @@ main:
 	call	_Z12DisplaySlatev
 
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(2)
+	ldi	r25,hi8(2)
 	push	r25
 	push	r24
 
@@ -504,8 +504,8 @@ main:
 	pop	r25
 	push	r24
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(5)
+	ldi	r25,hi8(5)
 	push	r25
 	push	r24
 
@@ -528,8 +528,8 @@ main:
 	call	_Z12DisplaySlatev
 
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(1)
+	ldi	r25,hi8(1)
 	push	r25
 	push	r24
 
@@ -538,8 +538,8 @@ main:
 	pop	r25
 	push	r24
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(6)
+	ldi	r25,hi8(6)
 	push	r25
 	push	r24
 
@@ -562,8 +562,8 @@ main:
 	call	_Z12DisplaySlatev
 
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(1)
+	ldi	r25,hi8(1)
 	push	r25
 	push	r24
 
@@ -572,8 +572,8 @@ main:
 	pop	r25
 	push	r24
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(7)
+	ldi	r25,hi8(7)
 	push	r25
 	push	r24
 
@@ -596,8 +596,8 @@ main:
 	call	_Z12DisplaySlatev
 
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(2)
+	ldi	r25,hi8(2)
 	push	r25
 	push	r24
 
@@ -606,8 +606,8 @@ main:
 	pop	r25
 	push	r24
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(7)
+	ldi	r25,hi8(7)
 	push	r25
 	push	r24
 
@@ -630,8 +630,8 @@ main:
 	call	_Z12DisplaySlatev
 
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(3)
+	ldi	r25,hi8(3)
 	push	r25
 	push	r24
 
@@ -640,8 +640,8 @@ main:
 	pop	r25
 	push	r24
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(6)
+	ldi	r25,hi8(6)
 	push	r25
 	push	r24
 
@@ -664,8 +664,8 @@ main:
 	call	_Z12DisplaySlatev
 
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(4)
+	ldi	r25,hi8(4)
 	push	r25
 	push	r24
 
@@ -674,8 +674,8 @@ main:
 	pop	r25
 	push	r24
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(4)
+	ldi	r25,hi8(4)
 	push	r25
 	push	r24
 
@@ -698,8 +698,8 @@ main:
 	call	_Z12DisplaySlatev
 
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(5)
+	ldi	r25,hi8(5)
 	push	r25
 	push	r24
 
@@ -708,8 +708,8 @@ main:
 	pop	r25
 	push	r24
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(4)
+	ldi	r25,hi8(4)
 	push	r25
 	push	r24
 
@@ -732,8 +732,8 @@ main:
 	call	_Z12DisplaySlatev
 
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(6)
+	ldi	r25,hi8(6)
 	push	r25
 	push	r24
 
@@ -742,8 +742,8 @@ main:
 	pop	r25
 	push	r24
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(5)
+	ldi	r25,hi8(5)
 	push	r25
 	push	r24
 
@@ -766,8 +766,8 @@ main:
 	call	_Z12DisplaySlatev
 
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(6)
+	ldi	r25,hi8(6)
 	push	r25
 	push	r24
 
@@ -776,8 +776,8 @@ main:
 	pop	r25
 	push	r24
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(6)
+	ldi	r25,hi8(6)
 	push	r25
 	push	r24
 
@@ -800,8 +800,8 @@ main:
 	call	_Z12DisplaySlatev
 
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(5)
+	ldi	r25,hi8(5)
 	push	r25
 	push	r24
 
@@ -810,8 +810,8 @@ main:
 	pop	r25
 	push	r24
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(6)
+	ldi	r25,hi8(6)
 	push	r25
 	push	r24
 
@@ -834,8 +834,8 @@ main:
 	call	_Z12DisplaySlatev
 
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(4)
+	ldi	r25,hi8(4)
 	push	r25
 	push	r24
 
@@ -844,8 +844,8 @@ main:
 	pop	r25
 	push	r24
 
-	ldi	r24,lo8(-1)
-	ldi	r25,hi8(-1)
+	ldi	r24,lo8(5)
+	ldi	r25,hi8(5)
 	push	r25
 	push	r24
 

@@ -701,7 +701,7 @@ public class Yylex implements java_cup.runtime.Scanner {
 					case -18:
 						break;
 					case 18:
-						{return new Symbol(sym.INT_LITERAL, new SymbolValue(yyline +1, yychar+1, yytext()));}
+						{return new Symbol(sym.INT_LITERAL, new SymbolValue(yyline+1, yychar+1, yytext(), new Integer(yytext())));}
 					case -19:
 						break;
 					case 19:

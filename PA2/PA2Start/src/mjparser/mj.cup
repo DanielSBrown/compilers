@@ -209,7 +209,7 @@ main_class ::=
 
           parser.out.print("\n");
           //@Danny: a and b are not correctly referencing the int value
-          //that I tried to set in expression, below this 
+          //that I tried to set in expression, below this
           parser.out.println("\tldi\t" + "r24,lo8(" + a + ")");
           parser.out.println("\tldi\t" + "r25,hi8(" + a + ")");
           parser.out.println("\tpush\t" + "r25");

@@ -123,7 +123,7 @@ SPACE = [\ \t]
 "//".*      { }
 [/][*][^*]*[*]+([^*/][^*]*[*]+)*[/]       {  }
 {SPACE}     { }
-{DIGIT}+         {return new Symbol(sym.INT_LITERAL, new SymbolValue(yyline +1, yychar+1, yytext()));}
+{DIGIT}+         {return new Symbol(sym.INT_LITERAL, new SymbolValue(yyline+1, yychar+1, yytext(), new Integer(yytext())));}
 {LETTER}+    {return new Symbol(sym.ID, new SymbolValue(yyline +1, yychar+1, yytext()));}
 {EOL} {/*reset pos to -1, if 0, otherwise line 1 starts at 0, rest start at 1 */ yychar=-1;}
 [ \t\r\n\f] { /* ignore white space. */ }
