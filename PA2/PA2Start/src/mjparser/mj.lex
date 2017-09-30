@@ -37,7 +37,7 @@ import java_cup.runtime.Symbol;
 
 EOL=(\r|\n|\r\n)
 DIGIT = [0-9]
-LETTER = [A-Za-z_$][A-Za-z0-9_$]
+LETTER = [A-Za-z_]+[A-Za-z0-9_]*
 SPACE = [\ \t]
 
 
@@ -60,16 +60,15 @@ SPACE = [\ \t]
 ","         {return new Symbol(sym.COMMA,new SymbolValue(yyline+1, yychar+1, yytext()));}
 "["         {return new Symbol(sym.LBRACKET,new SymbolValue(yyline+1, yychar+1, yytext()));}
 "]"         {return new Symbol(sym.RBRACKET,new SymbolValue(yyline+1, yychar+1, yytext()));}
-"."         {return new Symbol(sym.DOT,new SymbolValue(yyline+1, yychar+1, yytext()));}
 
 "main"      {return new Symbol(sym.MAIN,new SymbolValue(yyline+1, yychar+1, yytext()));}
 "boolean"      {return new Symbol(sym.BOOLEAN,new SymbolValue(yyline+1, yychar+1, yytext()));}
 "int"      {return new Symbol(sym.INT,new SymbolValue(yyline+1, yychar+1, yytext()));}
 "byte"      {return new Symbol(sym.BYTE,new SymbolValue(yyline+1, yychar+1, yytext()));}
-"false"      {return new Symbol(sym.FALSE,new SymbolValue(yyline+1, yychar+1, yytext(),0));}
+"false"      {return new Symbol(sym.FALSE,new SymbolValue(yyline+1, yychar+1, yytext(), 0));}
 "if"      {return new Symbol(sym.IF,new SymbolValue(yyline+1, yychar+1, yytext()));}
 "else"      {return new Symbol(sym.ELSE,new SymbolValue(yyline+1, yychar+1, yytext()));}
-"true"      {return new Symbol(sym.TRUE,new SymbolValue(yyline+1, yychar+1, yytext(),1));}
+"true"      {return new Symbol(sym.TRUE,new SymbolValue(yyline+1, yychar+1, yytext(), 1));}
 "while"      {return new Symbol(sym.WHILE,new SymbolValue(yyline+1, yychar+1, yytext()));}
 "public"      {return new Symbol(sym.PUBLIC,new SymbolValue(yyline+1, yychar+1, yytext()));}
 "return"      {return new Symbol(sym.RETURN,new SymbolValue(yyline+1, yychar+1, yytext()));}
@@ -117,14 +116,17 @@ SPACE = [\ \t]
 "Meggy.Tone.As3"      {return new Symbol(sym.TONE_LITERAL,new SymbolValue(yyline+1, yychar+1,yytext(), 32397));}
 "Meggy.Tone.B3"      {return new Symbol(sym.TONE_LITERAL,new SymbolValue(yyline+1, yychar+1, yytext()));}
 "Meggy.Color"      {return new Symbol(sym.MEGGYCOLOR,new SymbolValue(yyline+1, yychar+1, yytext()));}
+"Meggy.Button"      {return new Symbol(sym.MEGGYBUTTON,new SymbolValue(yyline+1, yychar+1, yytext()));}
+
 "Meggy.Tone"      {return new Symbol(sym.MEGGYTONE,new SymbolValue(yyline+1, yychar+1, yytext()));}
+"."         {return new Symbol(sym.DOT,new SymbolValue(yyline+1, yychar+1, yytext()));}
 
 
 "//".*      { }
 [/][*][^*]*[*]+([^*/][^*]*[*]+)*[/]       {  }
 {SPACE}     { }
 {DIGIT}+         {return new Symbol(sym.INT_LITERAL, new SymbolValue(yyline +1, yychar+1, yytext()));}
-{LETTER}+    {return new Symbol(sym.ID, new SymbolValue(yyline +1, yychar+1, yytext()));}
+{LETTER}    {return new Symbol(sym.ID, new SymbolValue(yyline +1, yychar+1, yytext()));}
 {EOL} {/*reset pos to -1, if 0, otherwise line 1 starts at 0, rest start at 1 */ yychar=-1;}
 [ \t\r\n\f] { /* ignore white space. */ }
 . { System.err.println("Illegal character: "+yytext()); }
