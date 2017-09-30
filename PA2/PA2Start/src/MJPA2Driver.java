@@ -41,12 +41,6 @@ public class MJPA2Driver {
               if(symbol.value!=null) {
                 SymbolValue symval = (SymbolValue)symbol.value;
                 int value = 0;
-                try {
-                  symval.value = Integer.parseInt(symval.toString());
-                }
-                catch (NumberFormatException e) {
-                  symval.value = -1;
-                }
                 System.out.println(" [" + symval.lexeme + "  at: (" + symval.line + "," + symval.pos + ")" +"  value: " +  symval.value + "]");
               } else {
                 System.out.println(" null value");
