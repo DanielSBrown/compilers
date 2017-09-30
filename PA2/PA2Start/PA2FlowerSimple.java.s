@@ -867,7 +867,6 @@ main:
 	call	_Z6DrawPxhhh
 	call	_Z12DisplaySlatev
 
-null
 
 
 /* epilogue start */

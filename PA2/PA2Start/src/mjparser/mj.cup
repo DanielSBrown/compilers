@@ -153,7 +153,8 @@ main_class ::=
 
         statement_list:list RBRACE
           {:
-          parser.out.println(list);
+            //currently prints null, commenting out to not ruin assembly file
+          //parser.out.println(list);
           :}
 
         RBRACE
@@ -206,7 +207,7 @@ main_class ::=
         SEMI
         {:
           //code assembly printing here
-
+          //parser.out.print("# testflush");
           parser.out.print("\n");
           //@Danny: a and b are not correctly referencing the int value
           //that I tried to set in expression, below this
