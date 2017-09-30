@@ -17,6 +17,856 @@ main:
 /* prologue: function */
     call _Z18MeggyJrSimpleSetupv 
     /* Need to call this so that the meggy library gets set up */
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int1 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int2 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+# color expression meggy.color.COLOR
+	ldi	r22,6
+# Push color expression onto stack
+	push	r22
+
+### Meggy.SetPixel(a,b,color) call
+# load a one byte expression off stack
+	pop	r20
+	pop	r22
+	pop	r24
+	call	_Z6DrawPxhhh
+	call	_Z12DisplaySlatev
+
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int1 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int2 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+# color expression meggy.color.COLOR
+	ldi	r22,6
+# Push color expression onto stack
+	push	r22
+
+### Meggy.SetPixel(a,b,color) call
+# load a one byte expression off stack
+	pop	r20
+	pop	r22
+	pop	r24
+	call	_Z6DrawPxhhh
+	call	_Z12DisplaySlatev
+
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int1 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int2 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+# color expression meggy.color.COLOR
+	ldi	r22,6
+# Push color expression onto stack
+	push	r22
+
+### Meggy.SetPixel(a,b,color) call
+# load a one byte expression off stack
+	pop	r20
+	pop	r22
+	pop	r24
+	call	_Z6DrawPxhhh
+	call	_Z12DisplaySlatev
+
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int1 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int2 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+# color expression meggy.color.COLOR
+	ldi	r22,6
+# Push color expression onto stack
+	push	r22
+
+### Meggy.SetPixel(a,b,color) call
+# load a one byte expression off stack
+	pop	r20
+	pop	r22
+	pop	r24
+	call	_Z6DrawPxhhh
+	call	_Z12DisplaySlatev
+
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int1 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int2 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+# color expression meggy.color.COLOR
+	ldi	r22,6
+# Push color expression onto stack
+	push	r22
+
+### Meggy.SetPixel(a,b,color) call
+# load a one byte expression off stack
+	pop	r20
+	pop	r22
+	pop	r24
+	call	_Z6DrawPxhhh
+	call	_Z12DisplaySlatev
+
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int1 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int2 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+# color expression meggy.color.COLOR
+	ldi	r22,6
+# Push color expression onto stack
+	push	r22
+
+### Meggy.SetPixel(a,b,color) call
+# load a one byte expression off stack
+	pop	r20
+	pop	r22
+	pop	r24
+	call	_Z6DrawPxhhh
+	call	_Z12DisplaySlatev
+
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int1 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int2 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+# color expression meggy.color.COLOR
+	ldi	r22,3
+# Push color expression onto stack
+	push	r22
+
+### Meggy.SetPixel(a,b,color) call
+# load a one byte expression off stack
+	pop	r20
+	pop	r22
+	pop	r24
+	call	_Z6DrawPxhhh
+	call	_Z12DisplaySlatev
+
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int1 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int2 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+# color expression meggy.color.COLOR
+	ldi	r22,6
+# Push color expression onto stack
+	push	r22
+
+### Meggy.SetPixel(a,b,color) call
+# load a one byte expression off stack
+	pop	r20
+	pop	r22
+	pop	r24
+	call	_Z6DrawPxhhh
+	call	_Z12DisplaySlatev
+
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int1 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int2 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+# color expression meggy.color.COLOR
+	ldi	r22,6
+# Push color expression onto stack
+	push	r22
+
+### Meggy.SetPixel(a,b,color) call
+# load a one byte expression off stack
+	pop	r20
+	pop	r22
+	pop	r24
+	call	_Z6DrawPxhhh
+	call	_Z12DisplaySlatev
+
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int1 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int2 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+# color expression meggy.color.COLOR
+	ldi	r22,6
+# Push color expression onto stack
+	push	r22
+
+### Meggy.SetPixel(a,b,color) call
+# load a one byte expression off stack
+	pop	r20
+	pop	r22
+	pop	r24
+	call	_Z6DrawPxhhh
+	call	_Z12DisplaySlatev
+
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int1 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int2 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+# color expression meggy.color.COLOR
+	ldi	r22,6
+# Push color expression onto stack
+	push	r22
+
+### Meggy.SetPixel(a,b,color) call
+# load a one byte expression off stack
+	pop	r20
+	pop	r22
+	pop	r24
+	call	_Z6DrawPxhhh
+	call	_Z12DisplaySlatev
+
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int1 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int2 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+# color expression meggy.color.COLOR
+	ldi	r22,6
+# Push color expression onto stack
+	push	r22
+
+### Meggy.SetPixel(a,b,color) call
+# load a one byte expression off stack
+	pop	r20
+	pop	r22
+	pop	r24
+	call	_Z6DrawPxhhh
+	call	_Z12DisplaySlatev
+
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int1 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int2 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+# color expression meggy.color.COLOR
+	ldi	r22,6
+# Push color expression onto stack
+	push	r22
+
+### Meggy.SetPixel(a,b,color) call
+# load a one byte expression off stack
+	pop	r20
+	pop	r22
+	pop	r24
+	call	_Z6DrawPxhhh
+	call	_Z12DisplaySlatev
+
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int1 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int2 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+# color expression meggy.color.COLOR
+	ldi	r22,6
+# Push color expression onto stack
+	push	r22
+
+### Meggy.SetPixel(a,b,color) call
+# load a one byte expression off stack
+	pop	r20
+	pop	r22
+	pop	r24
+	call	_Z6DrawPxhhh
+	call	_Z12DisplaySlatev
+
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int1 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int2 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+# color expression meggy.color.COLOR
+	ldi	r22,6
+# Push color expression onto stack
+	push	r22
+
+### Meggy.SetPixel(a,b,color) call
+# load a one byte expression off stack
+	pop	r20
+	pop	r22
+	pop	r24
+	call	_Z6DrawPxhhh
+	call	_Z12DisplaySlatev
+
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int1 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int2 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+# color expression meggy.color.COLOR
+	ldi	r22,6
+# Push color expression onto stack
+	push	r22
+
+### Meggy.SetPixel(a,b,color) call
+# load a one byte expression off stack
+	pop	r20
+	pop	r22
+	pop	r24
+	call	_Z6DrawPxhhh
+	call	_Z12DisplaySlatev
+
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int1 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int2 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+# color expression meggy.color.COLOR
+	ldi	r22,6
+# Push color expression onto stack
+	push	r22
+
+### Meggy.SetPixel(a,b,color) call
+# load a one byte expression off stack
+	pop	r20
+	pop	r22
+	pop	r24
+	call	_Z6DrawPxhhh
+	call	_Z12DisplaySlatev
+
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int1 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int2 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+# color expression meggy.color.COLOR
+	ldi	r22,6
+# Push color expression onto stack
+	push	r22
+
+### Meggy.SetPixel(a,b,color) call
+# load a one byte expression off stack
+	pop	r20
+	pop	r22
+	pop	r24
+	call	_Z6DrawPxhhh
+	call	_Z12DisplaySlatev
+
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int1 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int2 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+# color expression meggy.color.COLOR
+	ldi	r22,6
+# Push color expression onto stack
+	push	r22
+
+### Meggy.SetPixel(a,b,color) call
+# load a one byte expression off stack
+	pop	r20
+	pop	r22
+	pop	r24
+	call	_Z6DrawPxhhh
+	call	_Z12DisplaySlatev
+
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int1 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int2 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+# color expression meggy.color.COLOR
+	ldi	r22,6
+# Push color expression onto stack
+	push	r22
+
+### Meggy.SetPixel(a,b,color) call
+# load a one byte expression off stack
+	pop	r20
+	pop	r22
+	pop	r24
+	call	_Z6DrawPxhhh
+	call	_Z12DisplaySlatev
+
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int1 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int2 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+# color expression meggy.color.COLOR
+	ldi	r22,6
+# Push color expression onto stack
+	push	r22
+
+### Meggy.SetPixel(a,b,color) call
+# load a one byte expression off stack
+	pop	r20
+	pop	r22
+	pop	r24
+	call	_Z6DrawPxhhh
+	call	_Z12DisplaySlatev
+
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int1 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int2 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+# color expression meggy.color.COLOR
+	ldi	r22,6
+# Push color expression onto stack
+	push	r22
+
+### Meggy.SetPixel(a,b,color) call
+# load a one byte expression off stack
+	pop	r20
+	pop	r22
+	pop	r24
+	call	_Z6DrawPxhhh
+	call	_Z12DisplaySlatev
+
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int1 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int2 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+# color expression meggy.color.COLOR
+	ldi	r22,6
+# Push color expression onto stack
+	push	r22
+
+### Meggy.SetPixel(a,b,color) call
+# load a one byte expression off stack
+	pop	r20
+	pop	r22
+	pop	r24
+	call	_Z6DrawPxhhh
+	call	_Z12DisplaySlatev
+
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int1 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int2 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+# color expression meggy.color.COLOR
+	ldi	r22,6
+# Push color expression onto stack
+	push	r22
+
+### Meggy.SetPixel(a,b,color) call
+# load a one byte expression off stack
+	pop	r20
+	pop	r22
+	pop	r24
+	call	_Z6DrawPxhhh
+	call	_Z12DisplaySlatev
+
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int1 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+	ldi	r24,lo8(-1)
+	ldi	r25,hi8(-1)
+	push	r25
+	push	r24
+
+# casting int2 to byte
+	pop	r24
+	pop	r25
+	push	r24
+
+# color expression meggy.color.COLOR
+	ldi	r22,6
+# Push color expression onto stack
+	push	r22
+
+### Meggy.SetPixel(a,b,color) call
+# load a one byte expression off stack
+	pop	r20
+	pop	r22
+	pop	r24
+	call	_Z6DrawPxhhh
+	call	_Z12DisplaySlatev
+
 null
 
 

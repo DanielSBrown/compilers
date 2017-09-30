@@ -155,6 +155,7 @@ main_class ::=
           {:
           parser.out.println(list);
           :}
+
         RBRACE
           {:
             //Epilogue
@@ -203,15 +204,64 @@ main_class ::=
         exp:color
         RPAREN
         SEMI
+        {:
+          //code assembly printing here
+          parser.out.print("\n");
+          parser.out.println("\tldi\t" + "r24,lo8(" + a + ")");
+          parser.out.println("\tldi\t" + "r25,hi8(" + a + ")");
+          parser.out.println("\tpush\t" + "r25");
+          parser.out.println("\tpush\t" + "r24");
+          parser.out.print("\n");
+
+          parser.out.println("# casting int1 to byte");
+          parser.out.println("\tpop\t" + "r24");
+          parser.out.println("\tpop\t" + "r25");
+          parser.out.println("\tpush\t" + "r24");
+          parser.out.print("\n");
+
+          parser.out.println("\tldi\t" + "r24,lo8(" + b + ")");
+          parser.out.println("\tldi\t" + "r25,hi8(" + b + ")");
+          parser.out.println("\tpush\t" + "r25");
+          parser.out.println("\tpush\t" + "r24");
+          parser.out.print("\n");
+
+          parser.out.println("# casting int2 to byte");
+          parser.out.println("\tpop\t" + "r24");
+          parser.out.println("\tpop\t" + "r25");
+          parser.out.println("\tpush\t" + "r24");
+          parser.out.print("\n");
+
+          parser.out.println("# color expression meggy.color.COLOR");
+          parser.out.println("\tldi\t" + "r22," + color);
+          parser.out.println("# Push color expression onto stack");
+          parser.out.println("\tpush\t" + "r22");
+          parser.out.print("\n");
+
+          parser.out.println("### Meggy.SetPixel(a,b,color) call");
+          parser.out.println("# load a one byte expression off stack");
+          parser.out.println("\tpop\t" + "r20");
+          parser.out.println("\tpop\t" + "r22");
+          parser.out.println("\tpop\t" + "r24");
+          parser.out.println("\tcall\t" + "_Z6DrawPxhhh");
+          parser.out.println("\tcall\t" + "_Z12DisplaySlatev");
+          parser.out.print("\n");
+
+        :}
         ;
+
     exp ::=
         LPAREN
         BYTE
         RPAREN
-        exp
-        | INT_LITERAL
-        | COLOR_LITERAL
+        exp:e
+          {: RESULT = e; :}
+        | INT_LITERAL:i
+          {: RESULT = i.value; :}
+        | COLOR_LITERAL:color
+          {: RESULT = color.value; :}
         ;
+
+
     statement_list ::=
         statement:s
         | statement_list statement:s
