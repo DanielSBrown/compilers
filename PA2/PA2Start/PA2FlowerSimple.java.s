@@ -17,6 +17,7 @@ main:
 /* prologue: function */
     call _Z18MeggyJrSimpleSetupv 
     /* Need to call this so that the meggy library gets set up */
+null
 
 
 /* epilogue start */
@@ -25,4 +26,3 @@ main:
     ret
     .size   main, .-main
 
-null

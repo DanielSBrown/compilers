@@ -148,10 +148,19 @@ main_class ::=
                 }
             }
 
+          :}
+
+
+        statement_list:list RBRACE
+          {:
+          parser.out.println(list);
+          :}
+        RBRACE
+          {:
             //Epilogue
             System.out.println("Generate epilogue using avrF.rtl.s");
             InputStream mainEpilogue=null;
-            //BufferedReader reader=null;
+            BufferedReader reader=null;
           //  parser.out.println("This is a test");
             try {
                 // The syntax for loading a text resource file
@@ -180,19 +189,6 @@ main_class ::=
                 }
             }
 
-
-          :}
-
-
-
-
-
-        statement_list:list RBRACE
-          {:
-          parser.out.println(list);
-          :}
-        RBRACE
-          {:
             parser.out.flush();
           :}
     ;
