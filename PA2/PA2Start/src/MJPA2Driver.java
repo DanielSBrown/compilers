@@ -29,11 +29,24 @@ public class MJPA2Driver {
         // filename should be the last command line option
         String filename = args[args.length-1];
 
+
+
         try {
           // construct the lexer,
           // the lexer will be the same for all of the parsers
           Yylex lexer = new Yylex(new FileReader(filename));
 
+          //@Danny I copied this from MJDriver.java to create .s file.
+          //I think it needs to be done a different way instead of parsing
+          // create the parser
+/*        mj parser = new mj(lexer);
+          int lastInPath = filename.lastIndexOf('/');
+          parser.programName = filename.substring(lastInPath+1);
+          System.out.println("Driver finds input filename: " + parser.programName);
+          // and parse
+
+          parser.parse();
+*/
           // Exercise the lexer: print out all of the tokens
           java_cup.runtime.Symbol symbol = lexer.next_token();
           while (symbol.sym != sym.EOF) {

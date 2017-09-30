@@ -52,12 +52,12 @@ clean:
 
 ### Final jar files
 $(SCANNER).jar: $(SRC_DIR)/$(SCANNER)Driver.class
-	cd $(SRC_DIR); $(JAR) cmf $(SCANNER)MainClass.txt $(SCANNER).jar *.class */*.class -C $(JAVA_CUP_RUNTIME) java_cup  
+	cd $(SRC_DIR); $(JAR) cmf $(SCANNER)MainClass.txt $(SCANNER).jar *.class */*.class -C $(JAVA_CUP_RUNTIME) java_cup
 	cd ..
 	mv $(SRC_DIR)/$(SCANNER).jar .
 
 $(PROG).jar: $(SRC_DIR)/$(PROG)Driver.class
-	cd $(SRC_DIR); $(JAR) cmf $(PROG)MainClass.txt $(PROG).jar *.class */*.class avrH.rtl.s avrF.rtl.s -C $(JAVA_CUP_RUNTIME) java_cup  
+	cd $(SRC_DIR); $(JAR) cmf $(PROG)MainClass.txt $(PROG).jar *.class */*.class avrH.rtl.s avrF.rtl.s -C $(JAVA_CUP_RUNTIME) java_cup
 	cd ..
 	mv $(SRC_DIR)/$(PROG).jar .
 
@@ -68,7 +68,7 @@ $(PARSE_DIR)/mj.java: $(PARSE_DIR)/mj.cup
 	mv -f mj.java $(PARSE_DIR)/
 
 #### lexer
-$(PARSE_DIR)/Yylex.java: $(PARSE_DIR)/mj.lex $(PARSE_DIR)/mj.java 
+$(PARSE_DIR)/Yylex.java: $(PARSE_DIR)/mj.lex $(PARSE_DIR)/mj.java
 	java -jar JLex.jar $(PARSE_DIR)/mj.lex
 	mv $(PARSE_DIR)/mj.lex.java $(PARSE_DIR)/Yylex.java
 
@@ -84,4 +84,3 @@ MAINPROG_DEPS = $(SRC_DIR)/$(PROG)Driver.java  \
 
 $(SRC_DIR)/$(PROG)Driver.class: $(MAINPROG_DEPS)
 	$(JCC) -classpath $(JAVA_CUP_RUNTIME):$(SRC_DIR) $(SRC_DIR)/$(PROG)Driver.java
-

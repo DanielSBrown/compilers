@@ -90,7 +90,7 @@ public class MJDriver {
             // determine how to layout variables in AVR program
             ast_root.accept(new AVRallocVars(globalST));
           }
-*/
+
           // generate AVR code that evaluates the program
 //LOOK HERE @CHASE...maybe. We want to print out avr and this looks to do that sooo
           java.io.PrintStream avrsout =
@@ -98,7 +98,7 @@ public class MJDriver {
                       new java.io.FileOutputStream(filename + ".s"));
           ast_root.accept(new AVRgenVisitor(new PrintWriter(avrsout),globalST));
           System.out.println("Printing Atmel assembly to " + filename + ".s");
-
+*/
 
         } catch(exceptions.SemanticException e) {
             System.err.println(e.getMessage());
