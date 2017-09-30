@@ -107,7 +107,7 @@ main_class ::=
 
               if (!(name.lexeme+".java").equals(parser.programName)){
                 	System.out.println(parser.programName);
-                	parser.report_fatal_error("Name does not match Class",name);
+                	parser.report_fatal_error("Program/Class Name Mismatch",name);
                 	System.exit(1);
                 }
 
@@ -147,7 +147,46 @@ main_class ::=
                    e.printStackTrace();
                 }
             }
+
+            //Epilogue
+            System.out.println("Generate epilogue using avrF.rtl.s");
+            InputStream mainEpilogue=null;
+            //BufferedReader reader=null;
+          //  parser.out.println("This is a test");
+            try {
+                // The syntax for loading a text resource file
+                // from a jar file here:
+                // http://www.rgagnon.com/javadetails/java-0077.html
+                mainEpilogue
+                    = this.getClass().getClassLoader().getResourceAsStream(
+                        "avrF.rtl.s");
+                reader = new BufferedReader(new
+                    InputStreamReader(mainEpilogue));
+
+                String line = null;
+                while ((line = reader.readLine()) != null) {
+                  parser.out.println(line);
+                }
+            } catch ( Exception e2) {
+                e2.printStackTrace();
+            }
+            finally{
+                try{
+                    if(mainEpilogue!=null) mainEpilogue.close();
+                    if(reader!=null) reader.close();
+                }
+                catch (IOException e) {
+                   e.printStackTrace();
+                }
+            }
+
+
           :}
+
+
+
+
+
         statement_list:list RBRACE
           {:
           parser.out.println(list);
