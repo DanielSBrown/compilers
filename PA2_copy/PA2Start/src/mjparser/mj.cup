@@ -272,17 +272,17 @@ main_class ::=
         | MEGGYCHECKBUTTON:op exp:e
           {: RESULT = new MeggyCheckButton(op.line, op.pos, e):}
         | INT_LITERAL:i
-          {: RESULT = i.value; :}
+          {: RESULT = new IntLiteral(i.line, i.pos, i.lexeme, i.value); :}
         | COLOR_LITERAL:color
-          {: RESULT = color.value; :}
+          {: RESULT = new ColorLiteral(color.line, color.pos, color.name, color.value); :}
         | BUTTON_LITERAL:b
-          {: RESULT = b.value; :}
+          {: RESULT = new ButtonLiteral(b.line, b.pos, b.lexeme, b.value); :}
         | TRUE:t
-          {: RESULT = True_Literal;:}
+          {: RESULT = new TrueLiteral(t.line, t.pos, t.lexeme, t.value);:}
         | FALSE:f
-          {:RESULT = False_Literal; :}
-        | NOT exp:e
-          {:RESULT = !e.value; :}
+          {:RESULT = new FalseLiteral(f.line, f.pos, f.lexeme, f.value); :}
+        | NOT:op exp:e
+          {:RESULT = new NotExp(op.line,op.pos, e) :}
         | LPAREN exp:e RPAREN
           {: :}
         }
