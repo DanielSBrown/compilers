@@ -196,73 +196,62 @@ main_class ::=
     ;
 
     statement ::=
-        MEGGYSETPIXEL
-        LPAREN
-        exp:a
-        COMMA
-        exp:b
-        COMMA
-        exp:color
-        RPAREN
-        SEMI
-        {:
-          //code assembly printing here
-          //parser.out.print("# testflush");
-          parser.out.print("\n");
-          //@Danny: a and b are not correctly referencing the int value
-          //that I tried to set in expression, below this
-          parser.out.println("\tldi\t" + "r24,lo8(" + a + ")");
-          parser.out.println("\tldi\t" + "r25,hi8(" + a + ")");
-          parser.out.println("\tpush\t" + "r25");
-          parser.out.println("\tpush\t" + "r24");
-          parser.out.print("\n");
+        MEGGYSETPIXEL LPAREN exp:a COMMA exp:b COMMA exp:color RPAREN SEMI
+          {:
 
-          parser.out.println("# casting int1 to byte");
-          parser.out.println("\tpop\t" + "r24");
-          parser.out.println("\tpop\t" + "r25");
-          parser.out.println("\tpush\t" + "r24");
-          parser.out.print("\n");
+          :}
+        | MEGGYDELAY LPAREN exp:e RPAREN SEMI
+          {:
 
-          parser.out.println("\tldi\t" + "r24,lo8(" + b + ")");
-          parser.out.println("\tldi\t" + "r25,hi8(" + b + ")");
-          parser.out.println("\tpush\t" + "r25");
-          parser.out.println("\tpush\t" + "r24");
-          parser.out.print("\n");
+          :}
+        | IF LPAREN exp:e RPAREN statement:s
+          {:
 
-          parser.out.println("# casting int2 to byte");
-          parser.out.println("\tpop\t" + "r24");
-          parser.out.println("\tpop\t" + "r25");
-          parser.out.println("\tpush\t" + "r24");
-          parser.out.print("\n");
+          :}
+        | IF LPAREN exp:e RPAREN statement:s ELSE statement:s
+          {:
 
-          parser.out.println("# color expression meggy.color.COLOR");
-          parser.out.println("\tldi\t" + "r22," + color);
-          parser.out.println("# Push color expression onto stack");
-          parser.out.println("\tpush\t" + "r22");
-          parser.out.print("\n");
+          :}
+        | WHILE LPAREN exp:e RPAREN statement:s
+          {:
 
-          parser.out.println("### Meggy.SetPixel(a,b,color) call");
-          parser.out.println("# load a one byte expression off stack");
-          parser.out.println("\tpop\t" + "r20");
-          parser.out.println("\tpop\t" + "r22");
-          parser.out.println("\tpop\t" + "r24");
-          parser.out.println("\tcall\t" + "_Z6DrawPxhhh");
-          parser.out.println("\tcall\t" + "_Z12DisplaySlatev");
-          parser.out.print("\n");
-
-        :}
+          :}
         ;
 
     exp ::=
-        LPAREN
-        BYTE
-        RPAREN
-        exp:e
+        exp:e AND exp:e1
+          {: :}
+        | exp:e EQUAL exp:e1
+          {: :}
+        | exp:e PLUS exp:e1
+          {: :}
+        | exp:e MINUS exp:e1
+          {: :}
+        | exp:e TIMES exp:e1
+          {: :}
+        | LPAREN BYTE RPAREN exp:e
           {: RESULT = e; :}
+        | MINUS exp:e
+          {:  :}
+        | MEGGYGETPIXEL
+          {: :}
+        | MEGGYCHECKBUTTON
+          {: :}
         | INT_LITERAL:i
           {: RESULT = i.value; :}
         | COLOR_LITERAL:color
           {: RESULT = color.value; :}
+        | BUTTON_LITERAL:b
+          {: RESULT = b.value; :}
+        | TRUE
+          {: :}
+        | FALSE
+          {: :}
+        | NOT exp:e
+          {: :}
+        | LPAREN exp:e RPAREN
+          {: :}
+        }
         ;
 
 
