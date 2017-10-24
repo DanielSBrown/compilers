@@ -123,40 +123,30 @@ Start PA3 Grammar Typechecking
 
     public void outIfStatement(IfStatement node) { //CHECK THIS
       Type expType = this.mCurrentST.getExpType(node.getExp());
-      Type thenexpType = this.mCurrentST.getExpType(node.getThenStatement());
-      Type elseexpType = this.mCurrentST.getExpType(node.getElseStatement());
-      if (expType==Type.BOOL && thenexpType) {
-        this.mCurrentST.setExpType(node, Type.VOID);
-      }
-      else {
+      if (!expType==Type.BOOL) {
         throw new SemanticException(
                "Operands for MeggyDelay must be BOOL",
                      node.getExp().getLine());
-      }
+                   }
     }
 
     public void outWhileStatement(WhileStatement node) {  //Here too
       Type expType = this.mCurrentST.getExpType(node.getExp());
-      Type statementType = this.mCurrentST.getExpType(node.getStatement());
-      if (expType==Type.BOOL) {
-        this.mCurrentST.setExpType(node, Type.VOID);
-      }
-      else {
+      if (!expType==Type.BOOL) {
         throw new SemanticException(
                "Operands for MeggyDelay must be BOOL",
-                     node.getExp().getLine());
-      }
+                     node.getExp().getLine());      }
     }
 
-    public void outAssignStatement(AssignStatement node) {   //HERE too....
-      Type expType = this.mCurrentST.getExpType(node.getExp());
-      Type idType = this.mCurrentST.getExpType(node.getId());
-      if (expType==Type.BOOL) {
-        this.mCurrentST.setExpType(node, Type.VOID);
+    public void outEqualExp(EqualExp node) {   //HERE too....
+      Type lexpType = this.mCurrentST.getExpType(node.getLExp());
+      Type rexpType = this.mCurrentST.getExpType(node.getRExp());
+      if (lexpType==Type.BOOL && rexpType==Type.BOOL) {
+        this.mCurrentST.setExpType(node, Type.BOOL);
       }
       else {
         throw new SemanticException(
-               "Operands for MeggyDelay must be BOOL",
+               "Operands for equals operation must be BOOL",
                      node.getExp().getLine());
       }
     }
