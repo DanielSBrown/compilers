@@ -109,12 +109,12 @@ SPACE = [\ \t]
 "Meggy.Tone.Ds3"      {return new Symbol(sym.TONE_LITERAL,new SymbolValue(yyline+1, yychar+1,yytext(), 51427));}
 "Meggy.Tone.E3"      {return new Symbol(sym.TONE_LITERAL,new SymbolValue(yyline+1, yychar+1, yytext(),48541));}
 "Meggy.Tone.F3"      {return new Symbol(sym.TONE_LITERAL,new SymbolValue(yyline+1, yychar+1,yytext(), 45816));}
-"Meggy.Tone.Fs3"      {return new Symbol(sym.TONE_LITERAL,new SymbolValue(yyline+1, yychar+1,yytext(), 40816));}
-"Meggy.Tone.G3"      {return new Symbol(sym.TONE_LITERAL,new SymbolValue(yyline+1, yychar+1,yytext(), 38526));}
-"Meggy.Tone.Gs3"      {return new Symbol(sym.TONE_LITERAL,new SymbolValue(yyline+1, yychar+1, yytext(),36363));}
-"Meggy.Tone.A3"      {return new Symbol(sym.TONE_LITERAL,new SymbolValue(yyline+1, yychar+1, yytext(),34323));}
-"Meggy.Tone.As3"      {return new Symbol(sym.TONE_LITERAL,new SymbolValue(yyline+1, yychar+1,yytext(), 32397));}
-"Meggy.Tone.B3"      {return new Symbol(sym.TONE_LITERAL,new SymbolValue(yyline+1, yychar+1, yytext()));}
+"Meggy.Tone.Fs3"      {return new Symbol(sym.TONE_LITERAL,new SymbolValue(yyline+1, yychar+1,yytext(), 43243));}
+"Meggy.Tone.G3"      {return new Symbol(sym.TONE_LITERAL,new SymbolValue(yyline+1, yychar+1,yytext(), 40816));}
+"Meggy.Tone.Gs3"      {return new Symbol(sym.TONE_LITERAL,new SymbolValue(yyline+1, yychar+1, yytext(),38526));}
+"Meggy.Tone.A3"      {return new Symbol(sym.TONE_LITERAL,new SymbolValue(yyline+1, yychar+1, yytext(),36363));}
+"Meggy.Tone.As3"      {return new Symbol(sym.TONE_LITERAL,new SymbolValue(yyline+1, yychar+1,yytext(), 34323));}
+"Meggy.Tone.B3"      {return new Symbol(sym.TONE_LITERAL,new SymbolValue(yyline+1, yychar+1, yytext(), 32397));}
 "Meggy.Color"      {return new Symbol(sym.MEGGYCOLOR,new SymbolValue(yyline+1, yychar+1, yytext()));}
 "Meggy.Button"      {return new Symbol(sym.MEGGYBUTTON,new SymbolValue(yyline+1, yychar+1, yytext()));}
 

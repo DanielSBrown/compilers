@@ -10,9 +10,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import PA3.PA3Start.src.ast.node.*;
-import PA3.PA3Start.src.ast.visitor.*;
-import PA3.PA3Start.src.ast_visitors.*;
+import ast.node.*;
 
 
 
@@ -84,12 +82,12 @@ terminal SymbolValue THIS;
 terminal UMINUS;
 
 non terminal program;
-non terminal Integer exp;
-non terminal statement;
+non terminal IExp exp;
+non terminal IStatement statement;
 non terminal statement_list;
-non terminal main_class;
+non terminal MainClass main_class;
 non terminal if_stmt;
-non terminal stmt_block;
+non terminal IStatement stmt_block;
 
 /* Declare precedence and associativity  here */
 precedence left PLUS, MINUS;
@@ -106,12 +104,15 @@ precedence right UMINUS;
 start with program;
 
 program ::=
-    IMPORT MEGGY SEMI main_class
+    IMPORT:a MEGGY SEMI main_class:m {:
+      RESULT = new Program(a.line, a.pos, m, new LinkedList<IClassDecl>());
+      :}
     ;
 
 main_class ::=
         CLASS ID:name
-            {: java.io.PrintStream sout
+            {:
+              java.io.PrintStream sout
                     = new java.io.PrintStream(
                         new java.io.FileOutputStream(name.lexeme+".java.s"));
                 parser.out = new PrintWriter(sout);
@@ -212,7 +213,7 @@ main_class ::=
     if_stmt ::=
       IF:op LPAREN exp:e RPAREN stmt_block:s ELSE stmt_block:s2
       {:
-        RESULT = new IfStatement(op.line, op.pos, e, s, t);
+        RESULT = new IfStatement(op.line, op.pos, e, s, s2);
       :}
       ;
 
@@ -221,8 +222,7 @@ main_class ::=
         |MEGGYSETPIXEL:op LPAREN exp:a COMMA exp:b COMMA exp:color RPAREN SEMI
           {:
             System.out.println("Set pix");
-            ColorLiteral c = new ColorLiteral(op.line, op.pos, color.lexeme, color.value);
-            RESULT = new MeggySetPixel(op.line, op.pos, a, b, c);
+            RESULT = new MeggySetPixel(op.line, op.pos, a, b, color);
           :}
         | MEGGYDELAY:op LPAREN exp:e RPAREN SEMI
           {:
@@ -257,7 +257,7 @@ main_class ::=
             :}
         | exp:e TIMES:op exp:e1
           {:
-            RESULT = new TimesExp(op.line, op.pos, e, e1);
+            RESULT = new MulExp(op.line, op.pos, e, e1);
             :}
         | LPAREN BYTE:op RPAREN exp:e
           {: RESULT = new ByteCast(op.line, op.pos, e); :}
@@ -270,7 +270,7 @@ main_class ::=
         | INT_LITERAL:i
           {: RESULT = new IntLiteral(i.line, i.pos, i.lexeme, i.value); :}
         | COLOR_LITERAL:color
-          {: RESULT = new ColorLiteral(color.line, color.pos, color.name, color.value); :}
+          {: RESULT = new ColorLiteral(color.line, color.pos, color.lexeme, color.value); :}
         | BUTTON_LITERAL:b
           {: RESULT = new ButtonLiteral(b.line, b.pos, b.lexeme, b.value); :}
         | TRUE:t
