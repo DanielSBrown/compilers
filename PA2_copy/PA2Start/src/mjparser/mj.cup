@@ -85,6 +85,7 @@ non terminal statement;
 non terminal statement_list;
 non terminal main_class;
 non terminal if_stmt;
+non terminal stmt_block;
 
 /* Declare precedence and associativity  here */
 precedence left PLUS, MINUS;
@@ -202,14 +203,13 @@ main_class ::=
           :}
     ;
 
+    stmt_block ::= LBRACE statement_list:s RBRACE;
+
     if_stmt ::=
-      IF:op LPAREN exp:e RPAREN if_stmt:s ELSE if_stmt:t
+      IF:op LPAREN exp:e RPAREN stmt_block:s ELSE stmt_block:s2
       {:
         RESULT = new IfStatement(op.line, op.pos, e, s, t);
       :}
-      | exp:e
-      | statement: s
-      }
       ;
 
     statement ::=
@@ -225,15 +225,7 @@ main_class ::=
             System.out.println("Delay");
             RESULT = new MeggyDelay(op.line, op.pos, e);
           :}
-          |IF:op LPAREN exp:e RPAREN statement:s
-          {:
-            RESULT = new IfStatement(op.line, op.pos, e, s);
-          :}
-        | IF LPAREN exp:e RPAREN if_stmt:s ELSE if_stmt:t
-          {:
-            RESULT = new IfStatement(op.line, op.pos, e, s, t);
-
-          :}
+          | if_stmt {::}
 
         | WHILE:op LPAREN exp:e RPAREN statement:s
           {:
@@ -285,7 +277,7 @@ main_class ::=
           {:RESULT = new NotExp(op.line,op.pos, e) :}
         | LPAREN exp:e RPAREN
           {: :}
-        }
+
         ;
 
 
