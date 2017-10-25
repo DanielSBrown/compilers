@@ -135,7 +135,7 @@ main_class ::=
         LBRACE:brace statement_list:s RBRACE {:
           RESULT = new BlockStatement(brace.line, brace.pos, s);
           :}
-        |MEGGYSETPIXEL:op LPAREN exp:a COMMA exp:b COMMA exp:color RPAREN SEMI
+        | MEGGYSETPIXEL:op LPAREN exp:a COMMA exp:b COMMA exp:color RPAREN SEMI
           {:
             System.out.println("Set pix");
             RESULT = new MeggySetPixel(op.line, op.pos, a, b, color);
@@ -196,7 +196,7 @@ main_class ::=
         | NOT:op exp:e
           {:RESULT = new NotExp(op.line,op.pos, e); :}
         | LPAREN exp:e RPAREN
-          {: :}
+          {: RESULT = e; :}
 
         ;
 
@@ -205,6 +205,7 @@ main_class ::=
         statement:s
         {:
           ArrayList<IStatement> s1 = new ArrayList<IStatement>();
+          s1.add(s);
            RESULT = s1;
           :}
         | statement_list:s1 statement:s {:

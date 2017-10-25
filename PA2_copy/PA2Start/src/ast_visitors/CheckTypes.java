@@ -128,6 +128,7 @@ Start PA3 Grammar Typechecking
                "Operands for MeggyDelay must be BOOL",
                      node.getExp().getLine());
                    }
+      this.mCurrentST.setExpType(node, Type.BOOL);
     }
 
     public void outWhileStatement(WhileStatement node) {  //Here too
@@ -136,6 +137,7 @@ Start PA3 Grammar Typechecking
         throw new SemanticException(
                "Operands for MeggyDelay must be BOOL",
                      node.getExp().getLine());      }
+      this.mCurrentST.setExpType(node, Type.BOOL);
     }
 
     public void outEqualExp(EqualExp node) {   //HERE too....
@@ -215,7 +217,7 @@ Start PA3 Grammar Typechecking
       Type expType = this.mCurrentST.getExpType(node.getExp());
 
       if (expType==Type.BUTTON ) {
-        this.mCurrentST.setExpType(node, Type.BOOL);
+        this.mCurrentST.setExpType(node, Type.BUTTON);
       }
       else {
         throw new SemanticException(
