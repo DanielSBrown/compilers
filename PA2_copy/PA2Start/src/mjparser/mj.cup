@@ -16,7 +16,6 @@ import ast.node.*;
 
 parser code {:
 
-    public PrintWriter out;
 
     public String programName;
 
@@ -115,6 +114,7 @@ main_class ::=
         LBRACE:b
         statement_list:list RBRACE
           {:
+            System.out.println(list);
             BlockStatement block = new BlockStatement(b.line, b.pos, list);
             RESULT = new MainClass(a.line, a.pos, name.lexeme, param.lexeme, block);
             //currently prints null, commenting out to not ruin assembly file
@@ -203,5 +203,12 @@ main_class ::=
 
     statement_list ::=
         statement:s
-        | statement_list statement:s
+        {:
+          ArrayList<IStatement> s1 = new ArrayList<IStatement>();
+           RESULT = s1;
+          :}
+        | statement_list:s1 statement:s {:
+             s1.add(s);
+             RESULT = s1;
+          :}
     ;
