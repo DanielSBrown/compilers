@@ -16,7 +16,7 @@ import ast.node.*;
 
 parser code {:
 
-
+    public PrintWriter out;
     public String programName;
 
     public void unrecovered_syntax_error(Symbol cur_SymbolValue) {

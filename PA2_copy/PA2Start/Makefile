@@ -49,6 +49,7 @@ clean:
 	rm -rf $(PROG).jar
 	rm -rf $(SCANNER).jar
 	rm -rf javacup.dump
+	rm -rf  $(SRC_DIR)/*/*/*.class
 
 ### Final jar files
 $(SCANNER).jar: $(SRC_DIR)/$(SCANNER)Driver.class

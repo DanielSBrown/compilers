@@ -43,11 +43,8 @@ public final class BlockStatement extends IStatement
 
     public void setStatements(List<IStatement> list)
     {
-      System.out.println(list);
         this._statements_.clear();
-        System.out.println("TEst2");
         this._statements_.addAll(list);
-        System.out.println("TEST@@@@#@");
         for(IStatement e : list)
         {
             if(e.parent() != null)
