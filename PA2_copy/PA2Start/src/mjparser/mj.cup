@@ -84,10 +84,9 @@ terminal UMINUS;
 non terminal program;
 non terminal IExp exp;
 non terminal IStatement statement;
-non terminal statement_list;
+non terminal List<IStatement> statement_list;
 non terminal MainClass main_class;
-non terminal if_stmt;
-non terminal IStatement stmt_block;
+non terminal IfStatement if_stmt;
 
 /* Declare precedence and associativity  here */
 precedence left PLUS, MINUS;
@@ -110,115 +109,32 @@ program ::=
     ;
 
 main_class ::=
-        CLASS ID:name
-            {:
-              java.io.PrintStream sout
-                    = new java.io.PrintStream(
-                        new java.io.FileOutputStream(name.lexeme+".java.s"));
-                parser.out = new PrintWriter(sout);
-                // Check filename is class name, if not exit with error message
-
-              if (!(name.lexeme+".java").equals(parser.programName)){
-                	System.out.println(parser.programName);
-                	parser.report_fatal_error("Program/Class Name Mismatch",name);
-                	System.exit(1);
-                }
-
-                //System.exit(0);
-            :}
+        CLASS:a ID:name
         LBRACE PUBLIC STATIC VOID MAIN
         LPAREN STRING LBRACKET RBRACKET ID:param RPAREN
-        LBRACE
-          {:
-            System.out.println("Generate prolog using avrH.rtl.s");
-            InputStream mainPrologue=null;
-            BufferedReader reader=null;
-          //  parser.out.println("This is a test");
-            try {
-                // The syntax for loading a text resource file
-                // from a jar file here:
-                // http://www.rgagnon.com/javadetails/java-0077.html
-                mainPrologue
-                    = this.getClass().getClassLoader().getResourceAsStream(
-                        "avrH.rtl.s");
-                reader = new BufferedReader(new
-                    InputStreamReader(mainPrologue));
-
-                String line = null;
-                while ((line = reader.readLine()) != null) {
-                  parser.out.println(line);
-                }
-            } catch ( Exception e2) {
-                e2.printStackTrace();
-            }
-            finally{
-                try{
-                    if(mainPrologue!=null) mainPrologue.close();
-                    if(reader!=null) reader.close();
-                }
-                catch (IOException e) {
-                   e.printStackTrace();
-                }
-            }
-
-          :}
-
-
+        LBRACE:b
         statement_list:list RBRACE
           {:
+            BlockStatement block = new BlockStatement(b.line, b.pos, list);
+            RESULT = new MainClass(a.line, a.pos, name.lexeme, param.lexeme, block);
             //currently prints null, commenting out to not ruin assembly file
           //parser.out.println(list);
           :}
 
         RBRACE
-          {:
-            //Epilogue
-            System.out.println("Generate epilogue using avrF.rtl.s");
-            InputStream mainEpilogue=null;
-            BufferedReader reader=null;
-          //  parser.out.println("This is a test");
-            try {
-                // The syntax for loading a text resource file
-                // from a jar file here:
-                // http://www.rgagnon.com/javadetails/java-0077.html
-                mainEpilogue
-                    = this.getClass().getClassLoader().getResourceAsStream(
-                        "avrF.rtl.s");
-                reader = new BufferedReader(new
-                    InputStreamReader(mainEpilogue));
-
-                String line = null;
-                while ((line = reader.readLine()) != null) {
-                  parser.out.println(line);
-                }
-            } catch ( Exception e2) {
-                e2.printStackTrace();
-            }
-            finally{
-                try{
-                    if(mainEpilogue!=null) mainEpilogue.close();
-                    if(reader!=null) reader.close();
-                }
-                catch (IOException e) {
-                   e.printStackTrace();
-                }
-            }
-
-            parser.out.flush();
-          :}
     ;
 
-    stmt_block ::= LBRACE statement_list:s RBRACE;
-
     if_stmt ::=
-      IF:op LPAREN exp:e RPAREN stmt_block:s ELSE stmt_block:s2
+      IF:op LPAREN exp:e RPAREN statement:s ELSE statement:s2
       {:
         RESULT = new IfStatement(op.line, op.pos, e, s, s2);
       :}
       ;
 
     statement ::=
-        LBRACE statement_list RBRACE
+        LBRACE:brace statement_list:s RBRACE {:
+          RESULT = new BlockStatement(brace.line, brace.pos, s);
+          :}
         |MEGGYSETPIXEL:op LPAREN exp:a COMMA exp:b COMMA exp:color RPAREN SEMI
           {:
             System.out.println("Set pix");
