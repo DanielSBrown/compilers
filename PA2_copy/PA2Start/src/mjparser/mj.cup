@@ -83,13 +83,13 @@ terminal UMINUS;
 non terminal program;
 non terminal IExp exp;
 non terminal IStatement statement;
-non terminal List<IStatement> statement_list;
+non terminal ArrayList<IStatement> statement_list;
 non terminal MainClass main_class;
 non terminal IfStatement if_stmt;
 
 /* Declare precedence and associativity  here */
-precedence left PLUS, MINUS;
 precedence left AND, EQUAL;
+precedence left PLUS, MINUS;
 precedence left TIMES;
 
 
@@ -125,8 +125,9 @@ main_class ::=
     ;
 
     if_stmt ::=
-      IF:op LPAREN exp:e RPAREN statement:s ELSE statement:s2
+      IF:op LPAREN exp:e RPAREN statement:s {ELSE statement:s2}
       {:
+        System.out.println("Help");
         RESULT = new IfStatement(op.line, op.pos, e, s, s2);
       :}
       ;
@@ -145,13 +146,11 @@ main_class ::=
             System.out.println("Delay");
             RESULT = new MeggyDelay(op.line, op.pos, e);
           :}
-          | if_stmt {::}
-
+        | if_stmt
         | WHILE:op LPAREN exp:e RPAREN statement:s
           {:
             RESULT = new WhileStatement(op.line, op.pos, e, s);
           :}
-
         ;
 
     exp ::=
@@ -171,14 +170,17 @@ main_class ::=
           {:
             RESULT = new MinusExp(op.line, op.pos, e, e1);
             :}
+            %prec MINUS
         | exp:e TIMES:op exp:e1
           {:
             RESULT = new MulExp(op.line, op.pos, e, e1);
             :}
         | LPAREN BYTE:op RPAREN exp:e
           {: RESULT = new ByteCast(op.line, op.pos, e); :}
+          %prec TIMES
         | MINUS:op exp:e
           {: RESULT = new NegExp(op.line, op.pos, e);:}
+          %prec UMINUS
         | MEGGYGETPIXEL:op LPAREN exp:e COMMA exp:e2 RPAREN
           {: RESULT = new MeggyGetPixel(op.line, op.pos, e, e2);:}
         | MEGGYCHECKBUTTON:op exp:e
