@@ -81,11 +81,12 @@ terminal SymbolValue THIS;
 terminal UMINUS;
 
 non terminal program;
+/*non terminal ArrayList<IStatement> statements;*/
 non terminal IExp exp;
 non terminal IStatement statement;
 non terminal ArrayList<IStatement> statement_list;
 non terminal MainClass main_class;
-non terminal IfStatement if_stmt;
+non terminal IStatement if_stmt;
 
 /* Declare precedence and associativity  here */
 precedence left AND, EQUAL;
@@ -125,10 +126,26 @@ main_class ::=
     ;
 
     if_stmt ::=
-      IF:op LPAREN exp:e RPAREN statement:s {ELSE statement:s2}
+    LBRACE:brace statement_list:s RBRACE {:
+      RESULT = new BlockStatement(brace.line, brace.pos, s);
+      :}
+    | MEGGYSETPIXEL:op LPAREN exp:a COMMA exp:b COMMA exp:color RPAREN SEMI
       {:
-        System.out.println("Help");
-        RESULT = new IfStatement(op.line, op.pos, e, s, s2);
+        System.out.println("Set pix");
+        RESULT = new MeggySetPixel(op.line, op.pos, a, b, color);
+      :}
+    | MEGGYDELAY:op LPAREN exp:e RPAREN SEMI
+      {:
+        System.out.println("Delay");
+        RESULT = new MeggyDelay(op.line, op.pos, e);
+      :}
+    |IF:op LPAREN exp:e RPAREN if_stmt:s ELSE if_stmt:s2
+    {:
+      RESULT = new IfStatement(op.line, op.pos, e, s, s2);
+    :}
+    | WHILE:op LPAREN exp:e RPAREN if_stmt:s
+      {:
+        RESULT = new WhileStatement(op.line, op.pos, e, s);
       :}
       ;
 
@@ -146,7 +163,14 @@ main_class ::=
             System.out.println("Delay");
             RESULT = new MeggyDelay(op.line, op.pos, e);
           :}
-        | if_stmt
+        | IF:op LPAREN exp:e RPAREN statement:s
+        {:
+          RESULT = new IfStatement(op.line, op.pos, e, s, null);
+          :}
+        |IF:op LPAREN exp:e RPAREN if_stmt:s ELSE statement:s2
+        {:
+          RESULT = new IfStatement(op.line, op.pos, e, s, s2);
+        :}
         | WHILE:op LPAREN exp:e RPAREN statement:s
           {:
             RESULT = new WhileStatement(op.line, op.pos, e, s);
@@ -201,14 +225,24 @@ main_class ::=
           {: RESULT = e; :}
 
         ;
-
+/*    statement_list ::=
+      statements:s
+      {:
+        RESULT = s;
+        :}
+        |
+        {:
+          ArrayList<IStatement> s1 = new ArrayList<IStatement>();
+          RESULT = s1;
+          :}
+;*/
 
     statement_list ::=
         statement:s
         {:
           ArrayList<IStatement> s1 = new ArrayList<IStatement>();
           s1.add(s);
-           RESULT = s1;
+          RESULT = s1;
           :}
         | statement_list:s1 statement:s {:
              s1.add(s);
