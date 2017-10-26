@@ -146,7 +146,7 @@ Start PA3 Grammar Typechecking
     public void outEqualExp(EqualExp node) {   //HERE too....
       Type lexpType = this.mCurrentST.getExpType(node.getLExp());
       Type rexpType = this.mCurrentST.getExpType(node.getRExp());
-      if ((lexpType==Type.BOOL && rexpType==Type.BOOL) || ((lexpType==Type.BYTE || lexpType==Type.INT) && (rexpType==Type.BYTE || rexpType==Type.INT))){
+      if ((lexpType==Type.BOOL && rexpType==Type.BOOL) || ((lexpType==Type.BYTE || lexpType==Type.INT) && (rexpType==Type.BYTE || rexpType==Type.INT)) || ((lexpType==Type.COLOR && rexpType==Type.COLOR))){
         this.mCurrentST.setExpType(node, Type.BOOL);
       }
       else {
@@ -223,7 +223,7 @@ Start PA3 Grammar Typechecking
       Type expType = this.mCurrentST.getExpType(node.getExp());
 
       if (expType==Type.BUTTON ) {
-        this.mCurrentST.setExpType(node, Type.BUTTON);
+        this.mCurrentST.setExpType(node, Type.BOOL);
       }
       else {
         throw new SemanticException(

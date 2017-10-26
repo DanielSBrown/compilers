@@ -225,18 +225,6 @@ main_class ::=
           {: RESULT = e; :}
 
         ;
-/*    statement_list ::=
-      statements:s
-      {:
-        RESULT = s;
-        :}
-        |
-        {:
-          ArrayList<IStatement> s1 = new ArrayList<IStatement>();
-          RESULT = s1;
-          :}
-;*/
-
     statement_list ::=
         statement:s
         {:
