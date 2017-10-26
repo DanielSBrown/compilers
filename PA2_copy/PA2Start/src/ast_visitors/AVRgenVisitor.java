@@ -85,30 +85,38 @@ Start PA2 Grammar Typechecking
 
    }
 
+public void outIntegerExp(IntLiteral node) {
+  out.write("\n\tldi\tr24, lo8("+node.getIntValue()+")\n" +
+              "\n\tldi\tr25, hi8("+node.getIntValue()+")\n\n"+
+              "\n\tpush\tr25\n\n" +
+              "\n\tpush\tr24\n\n"
+  );
+}
+
   //  public void inByteCast(ByteCast node) {
-  //    out.println("#work you");
-  //  }
-  //  public void outByteCast(ByteCast node) {
-   //
-  //  }
-   public void visitByteCast(ByteCast node) {
+  //    out.println("\tpop \tr24\n" +
+  //                "\tpop \tr25\n" +
+  //                "\tpush \tr24\n\n"
+  //    );
+  //     }
+   public void outByteCast(ByteCast node) {
      out.println("\tpop \tr24\n" +
                  "\tpop \tr25\n" +
                  "\tpush \tr24\n\n"
      );
-   }
+
+    }
+  //  public void visitByteCast(ByteCast node) {
+  //    out.println("Im the one fuckingeverything up");
+  //   // inByteCast(node);
+  // //  outByteCast(node);
+  //  }
 
 /*
 Start PA3 Grammar Typechecking
 */
 
-public void outIntegerExp(IntLiteral node) {
-  out.write("\n\tldi\tr24, lo8("+node.getIntValue()+")\n" +
-              "\n\tldi\tr24, hi8("+node.getIntValue()+")\n\n"+
-              "\n\tpush\tr25\n\n" +
-              "\n\tpush\tr24\n\n"
-  );
-}
+
     // public void outMeggyDelay(MeggyDelay node) {
     //
     // }
