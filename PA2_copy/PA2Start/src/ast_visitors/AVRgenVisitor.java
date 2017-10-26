@@ -47,31 +47,64 @@ public class AVRgenVisitor extends DepthFirstVisitor {
        System.err.println("Node not implemented in AVRgenVisitor, " + node.getClass());
    }
 
-  //  public void outAndExp(AndExp node)
-  //  {
-   //
-  //  }
-  //  public void inAndExp(AndExp node)
-  //  {
-   //
-  //  }
-  //  public void visitAndExp(AndExp node)
-  //  {
-  //   // inAndExp(node);
-  //   // int a = labelCounter++;
-  //   // int b = labelCounter++;
-  //   // if(node.getLExp() != null)
-  //   //   node.getLExp().accept(this);
-  //   //
-  //   // out.println("    pop    r24\n"           //PRINT THE AND IN ASSEMBLY
-  //   // + "     pop     r25\n"
-  //   // + " \n");
-  //  }
 
-  //  public void outPlusExp(PlusExp node)
-  //  {
-   //
-  //  }
+   public void visitAndExp(AndExp node)
+   {
+     String label0 = "ML_" + labelCounter;
+     String label1 = "ML_" + labelCounter++;
+     String label2 = "ML_" + labelCounter++;
+     String label3 = "ML_" + labelCounter++;
+     String label4 = "ML_" + labelCounter++;
+
+     out.println("\tldi \tr22, " + "1" +   //first part without the branches
+                "\n\tpush \tr22\n" +
+                "\tpop \tr24\n" +
+                "\tpush \tr24\n" +
+                "\tldi \tr25, 0\n" +
+                "\tcp \tr24, r25\n" +
+                "\tbreq   "+label4 + "\n" +
+                "\tjmp  " + label3+ "\n"
+     );
+     out.println(label4 + ":\n" +          //label4
+                "\tpop \tr24" +
+                "\n\tldi \tr22, 1" +
+                "\n\tpush \tr22\n"+
+                "\tpop \tr24\n"+
+                "\tpush \tr24\n"
+     );
+     out.println(label3 + ":\n" +        //label3
+                "\tpop \tr24\n" +
+                "\tldi \tr25, 0\n\n" +
+                "\tcp \tr24, r25\n"+
+                "\tbrne  " + label1 +
+                "\n\tjmp  " + label0 + "\n"
+     );
+
+     out.println(label1 + ":\n" +     //label1
+                "\tjmp   " + label2 + "\n"
+     );
+     out.println(label0 + ":\n" +     //label0
+                "#Done\n"
+     );
+     out.println(label2 + ":\n"    //label 2
+
+     );
+
+   }
+
+   public void outPlusExp(PlusExp node)
+   {
+     out.println("\tpop \tr18\n" +
+                "\tpop \tr19\n\n" +
+                "\tpop \tr24\n" +
+                "\tpop \tr25\n\n"
+     );
+     out.println("\tadd \tr24, r18\n" +
+                "\tadc \tr25, r19\n\n" +
+                "\tpush \tr25\n" +
+                "\tpush \tr24\n\n"
+     );
+   }
 /*
 Start PA2 Grammar Typechecking
 */
@@ -91,14 +124,10 @@ public void outIntegerExp(IntLiteral node) {
               "\n\tpush\tr25\n\n" +
               "\n\tpush\tr24\n\n"
   );
+
+
 }
 
-  //  public void inByteCast(ByteCast node) {
-  //    out.println("\tpop \tr24\n" +
-  //                "\tpop \tr25\n" +
-  //                "\tpush \tr24\n\n"
-  //    );
-  //     }
    public void outByteCast(ByteCast node) {
      out.println("\tpop \tr24\n" +
                  "\tpop \tr25\n" +
@@ -106,56 +135,99 @@ public void outIntegerExp(IntLiteral node) {
      );
 
     }
-  //  public void visitByteCast(ByteCast node) {
-  //    out.println("Im the one fuckingeverything up");
-  //   // inByteCast(node);
-  // //  outByteCast(node);
-  //  }
+
 
 /*
 Start PA3 Grammar Typechecking
 */
 
 
-    // public void outMeggyDelay(MeggyDelay node) {
+    public void outMeggyDelay(MeggyDelay node) {
+
+      out.println("\n\tpop \tr24" +
+                "\n\tpop \tr25\n" +
+                "\tcall   _Z8delay_msj\n"
+      );
+    }
     //
-    // }
-    //
-    // public void outIfStatement(IfStatement node) { //CHECK THIS
-    // }
-    //
-    // public void outWhileStatement(WhileStatement node) {  //Here too
-    //
-    // }
-    //
-    // public void outEqualExp(EqualExp node) {   //HERE too....
-    //
-    // }
-    //
-    // public void outMulExp(MulExp node) {
-    //
-    // }
-    //
-    // public void outMinusExp(MinusExp node) {
-    //
-    // }
-    //
-    // public void outNegExp(NegExp node) {
-    //
-    // }
-    //
-    // public void outMeggyGetPixel(MeggyGetPixel node) {
-    //
-    // }
-    //
-    // public void outMeggyCheckButton(MeggyCheckButton node) {
-    //
-    //
-    // }
-    //
-    // public void outNotExp(NotExp node) {
-    //
-    // }
+    public void visitIfStatement(IfStatement node) { //@Chase
+        out.println("# If Statement");
+
+    }
+
+    public void visitWhileStatement(WhileStatement node) {  //@Chase
+      out.println("# While Statement");
+    }
+
+    public void visitEqualExp(EqualExp node) {   //@Chase
+      out.println("# Checking Equals");
+    }
+
+    public void outMulExp(MulExp node) {
+
+      out.println("#mult starting\n" +
+                "\tpop \tr18\n" +
+                "\tpop \tr22\n" +
+                "\tmov \tr24, r18\n" +
+                "\tmov \tr26, r22\n" +
+                "\tmuls \tr24, r26\n" +
+                "\tpush \tr1\n" +
+                "\tpush \tr0\n" +
+                "\teor \tr0, r0\n" +
+                "\teor \tr1, r1\n"
+      );
+    }
+
+    public void visitMinusExp(MinusExp node) {
+      out.println("#sub\n" +
+                "\tsub \tr24, r18\n" +
+                "\tsbc \tr25, r19\n" +
+                "\n\tpush \tr25" +
+                "\n\tpush \tr24"
+      );
+    }
+
+    public void outNegExp(NegExp node) {
+        out.println("\t#negation\n" +
+                  "\tpop \tr24\n" +
+                  "\tpop \tr25\n" +
+                  "\tldi \tr22, 0\n" +
+                  "\tldi \tr23, 0\n" +
+                  "\tsub \tr22, r24\n" +
+                  "\tsbc \tr23, r25\n" +
+                  "\tpush \tr23\n" +
+                  "\tpush \tr22\n"
+        );
+    }
+
+    public void outMeggyGetPixel(MeggyGetPixel node) {
+        out.println("\t#GetPixel\n" +
+                  "\tpop \tr22\n" +
+                  "\tpop \tr24\n" +
+                  "\tcall  \t_Z6ReadPxhh\n" +
+                  "\tpush \tr24\n"
+        );
+    }
+
+    public void outMeggyCheckButton(MeggyCheckButton node) {
+      String label = "ML_"+labelCounter++;
+      out.println("\t#CheckButton\n" +
+                  "\tcall    _Z16CheckButtonsDownv\n" +
+                  "\tlds \tr24, Button_Up\n" +       //LOOK HERE CHASE, IDK HOW TO GET WHICH BUTTON
+                  "\ttst \tr24\n" +
+                  "\tbreq" + label + "\n"
+      );
+
+    }
+
+    public void outNotExp(NotExp node) {
+      out.println("\t#NotExp\n" +
+                "\tpop \tr24\n" +
+                "\tldi  \tr22, 1\n" +
+                "\teor \tr24, r22\n" +
+                "\tpush \tr24\n"
+      );
+    }
     public void inProgram(Program node)  {
       try {
         File f = new File("src/ast_visitors/avrH.rtl.s");
@@ -174,7 +246,6 @@ Start PA3 Grammar Typechecking
         Scanner input = new Scanner(f);
         while (input.hasNextLine()) {
           String temp = input.nextLine();
-          System.out.println(temp);
           out.println(temp);
         }
       }

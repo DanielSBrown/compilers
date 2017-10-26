@@ -111,12 +111,12 @@ Start PA3 Grammar Typechecking
 */
     public void outMeggyDelay(MeggyDelay node) {
       Type expType = this.mCurrentST.getExpType(node.getExp());
-      if (expType==Type.BOOL) {
+      if (expType==Type.INT || expType==Type.BYTE) {
         this.mCurrentST.setExpType(node, Type.VOID);
       }
       else {
         throw new SemanticException(
-               "Operands for MeggyDelay must be BOOL",
+               "Operands for MeggyDelay must be INT or BYTE",
                      node.getExp().getLine(),
                      node.getExp().getPos());
       }
@@ -137,7 +137,7 @@ Start PA3 Grammar Typechecking
       Type expType = this.mCurrentST.getExpType(node.getExp());
       if (expType==Type.BOOL) {
         throw new SemanticException(
-               "Operands for MeggyDelay must be BOOL",
+               "Operands for while must be BOOL",
                      node.getExp().getLine(),
                      node.getExp().getPos());      }
       this.mCurrentST.setExpType(node, Type.BOOL);
@@ -262,7 +262,6 @@ Start PA3 Grammar Typechecking
 
     }
     public void outIntegerExp(IntLiteral node) {
-
     }
 
 
