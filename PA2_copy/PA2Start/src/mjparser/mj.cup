@@ -115,6 +115,11 @@ main_class ::=
         LBRACE:b
         statement_list:list RBRACE
           {:
+
+            if (parser.programName != name.lexeme + ".java") {
+              throw new java.lang.Error();
+            }
+            System.out.println("Hello");
             BlockStatement block = new BlockStatement(b.line, b.pos, list);
             RESULT = new MainClass(a.line, a.pos, name.lexeme, param.lexeme, block);
             //currently prints null, commenting out to not ruin assembly file
