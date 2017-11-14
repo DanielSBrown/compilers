@@ -246,6 +246,30 @@ Start PA3 Grammar Typechecking
       }
     }
 
+    public void outTrueExp(Program node){
+      if (node.getLexeme == "true") {
+      }
+      else {
+        throw new SemanticException(
+            "Operand must for True Literal must be 'true'",
+            node.getLine(),
+            node.getPost()
+        );
+      }
+    }
+
+    public void outFalseExp(Program node){
+      if (node.getLexeme == "false") {
+      }
+      else {
+        throw new SemanticException(
+            "Operand must for False literal must be 'false'",
+            node.getLine(),
+            node.getPost()
+        );
+      }
+    }
+
     public void outProgram(Program node) {
 
     }
