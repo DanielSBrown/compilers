@@ -87,6 +87,12 @@ non terminal IStatement statement;
 non terminal ArrayList<IStatement> statement_list;
 non terminal MainClass main_class;
 non terminal IStatement if_stmt;
+non terminal method_declaration;
+non terminal type;
+non terminal class_declaration;
+non terminal method_declaration_list;
+non terminal method_param;
+non terminal method_param_list;
 
 /* Declare precedence and associativity  here */
 precedence left AND, EQUAL;
@@ -119,7 +125,7 @@ main_class ::=
             if (parser.programName != name.lexeme + ".java") {
               throw new java.lang.Error();
             }
-          
+
             BlockStatement block = new BlockStatement(b.line, b.pos, list);
             RESULT = new MainClass(a.line, a.pos, name.lexeme, param.lexeme, block);
             //currently prints null, commenting out to not ruin assembly file
@@ -128,6 +134,62 @@ main_class ::=
 
         RBRACE
     ;
+
+class_declaration ::=
+    CLASS:a ID: name
+    LBRACE method_declaration_list:list RBRACE {:
+
+      :}
+      |CLASS:a ID: name
+      LBRACE RBRACE {:
+
+        :}
+
+    ;
+
+
+method_declaration ::=
+    PUBLIC type:t ID:id  LPAREN method_param:p RPAREN
+    LBRACE statement_list:list RETURN SEMI RBRACE {:
+
+      :}
+    |  PUBLIC type:t ID:id  LPAREN method_param:p RPAREN
+    LBRACE statement_list:list {:
+
+      :}
+  ;
+
+method_param_list ::=
+    method_param : m {:
+      :}
+    | method_param_list:list method_param:m {:
+      :}
+      ;
+method_param ::=
+    type:t ID:id {:
+      :}
+    ;
+
+
+
+method_declaration_list ::=
+    method_declaration: m {:
+      :}
+      |
+      method_declaration_list:list method_declaration:m {:
+        :}
+        ;
+type ::=
+BOOLEAN
+| BYTE
+|	INT
+|	VOID
+|	MEGGYCOLOR
+|	MEGGYBUTTON
+|	MEGGYTONE
+;
+
+
 
     if_stmt ::=
     LBRACE:brace statement_list:s RBRACE {:
