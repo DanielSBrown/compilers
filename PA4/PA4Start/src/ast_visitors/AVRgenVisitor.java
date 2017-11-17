@@ -50,11 +50,11 @@ public class AVRgenVisitor extends DepthFirstVisitor {
 
    public void visitAndExp(AndExp node)
    {
-     String label0 = "ML_" + labelCounter++;
-     String label1 = "ML_" + labelCounter++;
-     String label2 = "ML_" + labelCounter++;
-     String label3 = "ML_" + labelCounter++;
-     String label4 = "ML_" + labelCounter++;
+     String label0 = "MJ_L" + labelCounter++;
+     String label1 = "MJ_L" + labelCounter++;
+     String label2 = "MJ_L" + labelCounter++;
+     String label3 = "MJ_L" + labelCounter++;
+     String label4 = "MJ_L" + labelCounter++;
 
      out.println("\tldi \tr22, " + "1" +   //first part without the branches
                 "\n\tpush \tr22\n" +
@@ -154,11 +154,13 @@ Start PA3 Grammar Typechecking
 
 
     public void visitIfStatement(IfStatement node) { //@Chase
-        String label0 = "ML_" + labelCounter++;  //ML 0
-        String label1 = "ML_" + labelCounter++; // ML 1
-        String label2 = "ML_" + labelCounter++; // ML 2
+        String label0 = "MJ_L" + labelCounter++;  //ML 0
+        String label1 = "MJ_L" + labelCounter++; // ML 1
+        String label2 = "MJ_L" + labelCounter++; // ML 2
 
-        out.println("# If Statement\n" +
+        out.println("# If Statement\n");
+        node.getExp().accept(this);
+        out.println("" +
                     "# Load condition and branch iff false \n # load a one byte exp off stack\n" +
                     "\tpop \tr24\n" +
                     "\t#Load zero into reg\n" +
@@ -171,13 +173,16 @@ Start PA3 Grammar Typechecking
                     "\n\n\n#Then label for if\n" +
                     label1 + ":\n\n\n"
                     );
-        node.getThenStatement.accept(this);
+        node.getThenStatement().accept(this);
         out.println("\n\tjmp \t" + label2);
         out.println("\n\n\t# else label for if"
                     + label0 + ":\n"
         );
-        node.getElseStatement.accept(this);
-        out.println("\n" + label2 + "\n\n");
+        out.println("\n"+ label0 + ":\n");
+        if (node.getElseStatement() != null) {
+          node.getElseStatement().accept(this);
+        }
+        out.println("\n" + label2 + ":\n\n");
 
 
     }
@@ -193,15 +198,15 @@ Start PA3 Grammar Typechecking
     }
 
     public void visitEqualExp(EqualExp node) {   //@Chase
-      String label1 = "MJ_" + labelCounter++;
-      String label2 = "MJ_" + labelCounter++;
-      String label3 = "MJ_" + labelCounter++;
+      String label1 = "MJ_L" + labelCounter++;
+      String label2 = "MJ_L" + labelCounter++;
+      String label3 = "MJ_L" + labelCounter++;
       out.println("# Checking Equals\n" +
                   "\tpop \tr18\n" +
                   "\n"+
                   "\tpop \tr24\n" +
                   "\tcp \tr24, r18" +
-                  "\n\tbreq +"label2
+                  "\n\tbreq " + label2 +
                   "\n\n\n \t\t #result is false\n" +
                   label1 + ":\n" +
                   "\tldi \tr24, 0\n" +

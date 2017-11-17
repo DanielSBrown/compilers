@@ -122,7 +122,7 @@ main_class ::=
         statement_list:list RBRACE
           {:
 
-            if (parser.programName != name.lexeme + ".java") {
+            if (!parser.programName.equals(name.lexeme + ".java")) {
               throw new java.lang.Error();
             }
 
