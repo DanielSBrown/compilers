@@ -87,12 +87,13 @@ non terminal IStatement statement;
 non terminal ArrayList<IStatement> statement_list;
 non terminal MainClass main_class;
 non terminal IStatement if_stmt;
-non terminal method_declaration;
-non terminal type;
-non terminal class_declaration;
-non terminal method_declaration_list;
-non terminal method_param;
-non terminal method_param_list;
+non terminal MethodDecl method_declaration;
+non terminal IType type;
+non terminal IClassDecl class_declaration;
+non terminal ArrayList<MethodDecl> method_declaration_list;
+non terminal Formal method_param;
+non terminal ArrayList<Formal> method_param_list;
+non terminal ArrayList<IExp> exp_list;
 
 /* Declare precedence and associativity  here */
 precedence left AND, EQUAL;
@@ -109,8 +110,10 @@ precedence right UMINUS;
 start with program;
 
 program ::=
-    IMPORT:a MEGGY SEMI main_class:m {:
-      RESULT = new Program(a.line, a.pos, m, new LinkedList<IClassDecl>());
+    IMPORT:a MEGGY SEMI main_class:m class_declaration:c{:
+      LinkedList<IClassDecl> clist = new LinkedList<IClassDecl>();
+      clist.add(c);
+      RESULT = new Program(a.line, a.pos, m, clist);
       :}
     ;
 
@@ -138,35 +141,44 @@ main_class ::=
 class_declaration ::=
     CLASS:a ID: name
     LBRACE method_declaration_list:list RBRACE {:
-
+      RESULT = new ChildClassDecl(a.line, a.pos, name.lexeme, null, new ArrayList<VarDecl>(), list);  //IClassDecl or ClassType?
       :}
       |CLASS:a ID: name
       LBRACE RBRACE {:
-
+        RESULT = new ChildClassDecl(a.line, a.pos, name.lexeme, null, null, null);
         :}
 
     ;
 
 
 method_declaration ::=
-    PUBLIC type:t ID:id  LPAREN method_param:p RPAREN
-    LBRACE statement_list:list RETURN SEMI RBRACE {:
-
+    PUBLIC type:t ID:id  LPAREN method_param_list:p RPAREN
+    LBRACE statement_list:list RETURN:r SEMI RBRACE {:
+        ArrayList<VarDecl> v = new ArrayList<VarDecl>(); // look here pls
+        RESULT = new MethodDecl(id.line, id.pos, t, id.lexeme, p, v, list ); // look at this chase. Since we have no vardecls, is that list null? look at MethodDecl.java.
       :}
-    |  PUBLIC type:t ID:id  LPAREN method_param:p RPAREN
-    LBRACE statement_list:list {:
-
+    |  PUBLIC type:t ID:id  LPAREN method_param_list:p RPAREN
+    LBRACE statement_list:list RBRACE {:
+      ArrayList<VarDecl> v = new ArrayList<VarDecl>();
+        RESULT = new MethodDecl(id.line, id.pos, t, id.lexeme, p, v, list ); // look at this chase. Since we have no vardecls, is that list null? look at MethodDecl.java.
+          //Do we need to do anything different since one has no return statement?
       :}
   ;
 
 method_param_list ::=
     method_param : m {:
+      ArrayList<Formal> f1 = new ArrayList<Formal>();
+      f1.add(m);
+      RESULT = f1;
       :}
-    | method_param_list:list method_param:m {:
+    | method_param_list:f1 COMMA method_param:m {:
+      f1.add(m);
+      RESULT = f1;
       :}
       ;
 method_param ::=
     type:t ID:id {:
+      RESULT = new Formal(id.line, id.pos, t, id.lexeme);
       :}
     ;
 
@@ -174,12 +186,17 @@ method_param ::=
 
 method_declaration_list ::=
     method_declaration: m {:
+      ArrayList<MethodDecl> m1 = new ArrayList<MethodDecl>();
+      m1.add(m);
+      RESULT = m1;
       :}
       |
-      method_declaration_list:list method_declaration:m {:
+      method_declaration_list:m1 method_declaration:m {:
+        m1.add(m);
+        RESULT = m1;
         :}
         ;
-type ::=
+type ::=             //Do we need to add {::} here?
 BOOLEAN
 | BYTE
 |	INT
@@ -241,13 +258,35 @@ BOOLEAN
           {:
             RESULT = new WhileStatement(op.line, op.pos, e, s);
           :}
+        | exp:e DOT ID: id LPAREN exp_list:list RPAREN SEMI
+        {:
+          RESULT = new CallStatement(id.line, id.pos, e, id.lexeme, list);
+          :}
         ;
+
+        exp_list ::=
+          exp:e COMMA exp_list:list
+          {:
+            list.add(e);
+            RESULT = list;
+            :}
+          |  exp:e {:
+            ArrayList<IExp> list = new ArrayList<IExp>();
+            list.add(e);
+            RESULT = list;
+            :}
+    ;
+
+/*dot_expr ::= */
 
     exp ::=
         exp:e AND:op exp:e1
           {:
             RESULT = new AndExp(op.line, op.pos, e, e1);
             :}
+        | NEW ID:id LPAREN RPAREN
+            {: RESULT = new IdLiteral(id.line, id.pos, id.lexeme);
+              :}
         | exp:e EQUAL:op exp:e1
           {:
             RESULT = new EqualExp(op.line, op.pos, e, e1);
@@ -289,8 +328,18 @@ BOOLEAN
           {:RESULT = new NotExp(op.line,op.pos, e); :}
         | LPAREN exp:e RPAREN
           {: RESULT = e; :}
-
+        | ID:id {:
+          RESULT = new IdLiteral(id.line, id.pos, id.lexeme);:}
+      /*  | exp:e DOT ID:id LPAREN exp_list RPAREN SEMI {:
+            RESULT = new CallExp(!!!!!!!!!!!!!!);
+      :} */
+          /*| exp:e DOT ID: id LPAREN exp_list RPAREN SEMI  //maybe this one too */
+          /*OR*/
+        /*| exp:e DOT ID:id LPAREN exp_list:list RPAREN {::}  */
         ;
+/* @Chase, need to add the exp . id ( exp, (exp)?)* from the grammar. It is giving shift/reduce so im gonna not worry about it now and take it out.
+*/
+
     statement_list ::=
         statement:s
         {:
