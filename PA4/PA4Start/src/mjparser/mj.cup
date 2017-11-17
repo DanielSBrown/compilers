@@ -89,11 +89,17 @@ non terminal MainClass main_class;
 non terminal IStatement if_stmt;
 non terminal MethodDecl method_declaration;
 non terminal IType type;
-non terminal IClassDecl class_declaration;
+non terminal IClassDecl top_class_declaration;
+non terminal IClassDecl child_class_declaration;
 non terminal ArrayList<MethodDecl> method_declaration_list;
 non terminal Formal method_param;
 non terminal ArrayList<Formal> method_param_list;
 non terminal ArrayList<IExp> exp_list;
+non terminal ArrayList<IClassDecl> class_declaration_list;
+non terminal ArrayList<IClassDecl> child_declaration_list;
+non terminal ArrayList<IClassDecl> top_declaration_list;
+
+
 
 /* Declare precedence and associativity  here */
 precedence left AND, EQUAL;
@@ -110,10 +116,10 @@ precedence right UMINUS;
 start with program;
 
 program ::=
-    IMPORT:a MEGGY SEMI main_class:m class_declaration:c{:
-      LinkedList<IClassDecl> clist = new LinkedList<IClassDecl>();
-      clist.add(c);
-      RESULT = new Program(a.line, a.pos, m, clist);
+    IMPORT:a MEGGY SEMI main_class:m class_declaration_list:c{:
+    //  LinkedList<IClassDecl> clist = new LinkedList<IClassDecl>();  //Should not be hardcoded like this; can have multiple class_declarations, child and top
+//      clist.add(c);
+      RESULT = new Program(a.line, a.pos, m, c);
       :}
     ;
 
@@ -137,18 +143,70 @@ main_class ::=
 
         RBRACE
     ;
+class_declaration_list ::=
+  top_class_declaration:t {:
+    ArrayList<IClassDecl> t1 = new ArrayList<IClassDecl>();
+    t1.add(t);
+    RESULT = t1;
+    :}
+    | top_class_declaration:t top_declaration_list: c1 {:         //WHAT DO YOU NEED CHILDCLASSDECL FOR?
+      c1.add(t);
+      RESULT = c1;
+      :}
+      ;
 
-class_declaration ::=
+      top_declaration_list ::=
+          top_class_declaration:c {:
+            ArrayList<IClassDecl> t1 = new ArrayList<IClassDecl>();
+            t1.add(c);
+            RESULT = t1;
+          :}
+          | top_class_declaration:c top_declaration_list: c1 {:
+
+              c1.add(c);
+              RESULT = c1;
+            :}
+    ;
+
+
+  child_declaration_list ::=
+      child_class_declaration:c {:
+        ArrayList<IClassDecl> t1 = new ArrayList<IClassDecl>();
+        t1.add(c);
+        RESULT = t1;
+      :}
+      | child_class_declaration:c child_declaration_list: c1 {:
+
+          c1.add(c);
+          RESULT = c1;
+        :}
+;
+
+top_class_declaration ::=
     CLASS:a ID: name
     LBRACE method_declaration_list:list RBRACE {:
-      RESULT = new ChildClassDecl(a.line, a.pos, name.lexeme, null, new ArrayList<VarDecl>(), list);  //IClassDecl or ClassType?
+      RESULT = new TopClassDecl(a.line, a.pos, name.lexeme, new ArrayList<VarDecl>(), list);  //IClassDecl or ClassType?
       :}
       |CLASS:a ID: name
       LBRACE RBRACE {:
-        RESULT = new ChildClassDecl(a.line, a.pos, name.lexeme, null, null, null);
+        RESULT = new TopClassDecl(a.line, a.pos, name.lexeme, new ArrayList<VarDecl>(), null);
         :}
 
     ;
+
+    child_class_declaration ::=
+        CLASS:a ID: name
+        LBRACE method_declaration_list:list RBRACE {:
+
+          RESULT = new ChildClassDecl(a.line, a.pos, name.lexeme, null, new ArrayList<VarDecl>(), list);  // How to get parent?
+          :}
+          |CLASS:a ID: name
+          LBRACE RBRACE {:
+
+            RESULT = new ChildClassDecl(a.line, a.pos, name.lexeme, null,new ArrayList<VarDecl>(), null);
+            :}
+
+        ;
 
 
 method_declaration ::=
@@ -196,14 +254,21 @@ method_declaration_list ::=
         RESULT = m1;
         :}
         ;
-type ::=             //Do we need to add {::} here?
-BOOLEAN
-| BYTE
-|	INT
-|	VOID
-|	MEGGYCOLOR
-|	MEGGYBUTTON
-|	MEGGYTONE
+type ::=
+BOOLEAN:b
+{: RESULT = new BoolType(b.line, b.pos); :}
+| BYTE:b
+{: RESULT = new ByteType(b.line, b.pos); :}
+|	INT:i
+{: RESULT = new IntType(i.line, i.pos); :}
+|	VOID:v
+{:RESULT = new VoidType(v.line, v.pos);:}
+|	MEGGYCOLOR:m
+{: RESULT = new VoidType(m.line, m.pos); :}
+|	MEGGYBUTTON:m
+{: RESULT = new BoolType(m.line, m.pos); :}
+|	MEGGYTONE:m
+{: RESULT = new VoidType(m.line, m.pos); :}        //Idk what MeggyTone returns. @Chase
 ;
 
 
@@ -285,7 +350,7 @@ BOOLEAN
             RESULT = new AndExp(op.line, op.pos, e, e1);
             :}
         | NEW ID:id LPAREN RPAREN
-            {: RESULT = new IdLiteral(id.line, id.pos, id.lexeme);
+            {: RESULT = new NewExp(id.line, id.pos, id.lexeme);
               :}
         | exp:e EQUAL:op exp:e1
           {:

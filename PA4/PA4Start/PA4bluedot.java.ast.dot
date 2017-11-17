@@ -8,7 +8,7 @@ digraph ASTGraph {
 2 -> 3
 4 [ label="CallStatement" ];
 3 -> 4
-5 [ label="IdLiteral\nSimple" ];
+5 [ label="NewExp" ];
 4 -> 5
 6 [ label="ByteCast" ];
 4 -> 6
@@ -30,20 +30,26 @@ digraph ASTGraph {
 13 -> 14
 15 [ label="ColorLiteral\nMeggy.Color.BLUE" ];
 10 -> 15
-16 [ label="ChildClassDecl" ];
+16 [ label="TopClassDecl" ];
 0 -> 16
 17 [ label="MethodDecl" ];
 16 -> 17
-18 [ label="Formal" ];
+18 [ label="VoidType" ];
 17 -> 18
 19 [ label="Formal" ];
 17 -> 19
-20 [ label="MeggySetPixel" ];
-17 -> 20
-21 [ label="IdLiteral\nx" ];
-20 -> 21
-22 [ label="IdLiteral\ny" ];
-20 -> 22
-23 [ label="ColorLiteral\nMeggy.Color.BLUE" ];
-20 -> 23
+20 [ label="ByteType" ];
+19 -> 20
+21 [ label="Formal" ];
+17 -> 21
+22 [ label="ByteType" ];
+21 -> 22
+23 [ label="MeggySetPixel" ];
+17 -> 23
+24 [ label="IdLiteral\nx" ];
+23 -> 24
+25 [ label="IdLiteral\ny" ];
+23 -> 25
+26 [ label="ColorLiteral\nMeggy.Color.BLUE" ];
+23 -> 26
 }
