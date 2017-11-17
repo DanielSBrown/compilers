@@ -50,7 +50,7 @@ public class AVRgenVisitor extends DepthFirstVisitor {
 
    public void visitAndExp(AndExp node)
    {
-     String label0 = "ML_" + labelCounter;
+     String label0 = "ML_" + labelCounter++;
      String label1 = "ML_" + labelCounter++;
      String label2 = "ML_" + labelCounter++;
      String label3 = "ML_" + labelCounter++;
@@ -150,17 +150,69 @@ Start PA3 Grammar Typechecking
       );
     }
     //
+
+
+
     public void visitIfStatement(IfStatement node) { //@Chase
-        out.println("# If Statement");
+        String label0 = "ML_" + labelCounter++;  //ML 0
+        String label1 = "ML_" + labelCounter++; // ML 1
+        String label2 = "ML_" + labelCounter++; // ML 2
+
+        out.println("# If Statement\n" +
+                    "# Load condition and branch iff false \n # load a one byte exp off stack\n" +
+                    "\tpop \tr24\n" +
+                    "\t#Load zero into reg\n" +
+                    "\tldi \tr25, 0" +
+                    "\n\n #use cp to set SREG\n" +
+                    "\tcp \tr24, r25\n" +
+                    "\t#WANT breq to some" + label0 + "\n" +
+                    "\tbrne \t" + label1 +
+                    "\n\tjmp \t" + label0 +
+                    "\n\n\n#Then label for if\n" +
+                    label1 + ":\n\n\n"
+                    );
+        node.getThenStatement.accept(this);
+        out.println("\n\tjmp \t" + label2);
+        out.println("\n\n\t# else label for if"
+                    + label0 + ":\n"
+        );
+        node.getElseStatement.accept(this);
+        out.println("\n" + label2 + "\n\n");
+
 
     }
+
+
 
     public void visitWhileStatement(WhileStatement node) {  //@Chase
       out.println("# While Statement");
     }
 
+    public void outWhileStatement(WhileStatement node) {  //@Chase
+      out.println("# Out While Statement");
+    }
+
     public void visitEqualExp(EqualExp node) {   //@Chase
-      out.println("# Checking Equals");
+      String label1 = "MJ_" + labelCounter++;
+      String label2 = "MJ_" + labelCounter++;
+      String label3 = "MJ_" + labelCounter++;
+      out.println("# Checking Equals\n" +
+                  "\tpop \tr18\n" +
+                  "\n"+
+                  "\tpop \tr24\n" +
+                  "\tcp \tr24, r18" +
+                  "\n\tbreq +"label2
+                  "\n\n\n \t\t #result is false\n" +
+                  label1 + ":\n" +
+                  "\tldi \tr24, 0\n" +
+                  "\tjmp \t" + label3 +
+                  "\n\n\t# Result is true\n" +
+                   label2 + ":\n" +
+                  "\tldi \tr24, 1" +
+                  "\n" + label3 + ":\n" +
+                  "\t # Push one byte expression onto stack\n" +
+                  "\tpush \tr24"
+                  );
     }
 
     public void outMulExp(MulExp node) {
