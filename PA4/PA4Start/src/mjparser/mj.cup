@@ -241,7 +241,6 @@ method_param ::=
     ;
 
 
-
 method_declaration_list ::=
     method_declaration: m {:
       ArrayList<MethodDecl> m1 = new ArrayList<MethodDecl>();
@@ -268,7 +267,7 @@ BOOLEAN:b
 |	MEGGYBUTTON:m
 {: RESULT = new BoolType(m.line, m.pos); :}
 |	MEGGYTONE:m
-{: RESULT = new VoidType(m.line, m.pos); :}        //Idk what MeggyTone returns. @Chase
+{: RESULT = new ToneType(m.line, m.pos); :}        //Idk what MeggyTone returns. @Chase
 ;
 
 
