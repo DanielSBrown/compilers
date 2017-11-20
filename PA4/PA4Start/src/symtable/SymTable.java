@@ -17,6 +17,9 @@ import exceptions.InternalException;
 public class SymTable {
     private final HashMap<Node,Type> mExpType = new HashMap<Node,Type>();
 
+    //mGlobalScope
+    //mScopeStack
+
     public SymTable() {
 
       //write this
@@ -40,7 +43,7 @@ public class SymTable {
     public STE lookupInnermost(String sym) {
 
       //  Scope currentScope = mScopeStack.peek();
-
+      //NEED SCOPE CLASS @class
         //return currentScope.lookupInnermost(sym);
 
     }
@@ -51,6 +54,7 @@ public class SymTable {
      */
 
     public void insert(STE ste) {
+        //NEED STE CLASS @class
         /* WRITE ME */
     }
 
@@ -75,7 +79,7 @@ public class SymTable {
     	this.mExpType.put(exp, t);
     }
 
-    
+
     public Type getExpType(Node exp)
     {
     	return this.mExpType.get(exp);
