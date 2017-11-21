@@ -35,6 +35,7 @@ public class SymTable {
  */
     public STE lookup(String sym) {
         STE ste = null;
+        
     /* WRITE ME */
         return ste;
     }
