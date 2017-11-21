@@ -57,6 +57,10 @@ public class BuildSymTable extends DepthFirstVisitor {
         tempType = Type.BUTTON;
         s.setExpType(node, tempType);
       }
+      else if (node instanceof ToneLiteral) {
+        tempType = Type.TONE;
+        s.setExpType(node, tempType);
+      }
 
 
    }
