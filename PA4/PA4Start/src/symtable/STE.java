@@ -4,23 +4,22 @@ import ast.node.*;
 
 import exceptions.InternalException;
 
-public Class STE{
+
+public class STE{
 
   private String mName;
 
   public STE(String id){
-    mName = id;
+      mName = id;
   }
 
   public String getName(){
       return mName;
   }
 
-  public Void setName(String id){
-    nName = id;
+  public void setName(String id){
+      mName = id;
   }
-
-
 
 
 }

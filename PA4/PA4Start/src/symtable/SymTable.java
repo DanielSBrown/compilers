@@ -20,6 +20,7 @@ public class SymTable {
     //mGlobalScope
     //mScopeStack
 
+
     public SymTable() {
 
       //write this
@@ -32,20 +33,20 @@ public class SymTable {
  * Returns null if the symbol is not found.
  */
     public STE lookup(String sym) {
-
+        STE ste = null;
     /* WRITE ME */
-
+        return ste;
     }
 
     // Lookup a symbol in innermost scope only.
      // return null if the symbol is not found
      //
     public STE lookupInnermost(String sym) {
-
+        STE ste = null;
       //  Scope currentScope = mScopeStack.peek();
       //NEED SCOPE CLASS @class
         //return currentScope.lookupInnermost(sym);
-
+        return ste;
     }
 
 
