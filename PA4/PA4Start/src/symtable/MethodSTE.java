@@ -5,7 +5,7 @@ import ast.node.*;
 import exceptions.InternalException;
 
 
-public Class MethodSTE extends STE{
+public class MethodSTE extends STE{
 //Needs: mSignature, Scope
 
 }
