@@ -34,21 +34,31 @@ public class SymTable {
  * Returns null if the symbol is not found.
  */
     public STE lookup(String sym) {
-        STE ste = null;
-        
     /* WRITE ME */
+        STE ste = null;
+        while(mScopeStack.isEmpty() != true){
+            ste = lookupInnermost(sym);
+            if(ste != null){
+                return ste;
+            }
+            mScopeStack.pop(); //@Danny: currently destroys stack on lookup
+        }
         return ste;
     }
+
 
     // Lookup a symbol in innermost scope only.
      // return null if the symbol is not found
      //
     public STE lookupInnermost(String sym) {
-        STE ste = null;
-      //  Scope currentScope = mScopeStack.peek();
+    //    STE ste = null;
+        Scope currentScope = mScopeStack.peek();
+        // if(currentScope == null){
+        //     return null;
+        // }
       //NEED SCOPE CLASS @class
-        //return currentScope.lookupInnermost(sym);
-        return ste;
+        return currentScope.STElookup(sym);
+        //return ste;
     }
 
 
@@ -57,6 +67,14 @@ public class SymTable {
      */
 
     public void insert(STE ste) {
+        Scope currentScope = mScopeStack.peek();
+        boolean success = false;
+        success = currentScope.insert(ste);
+        if(success == false){
+            //Throw an Error
+        }
+
+        
         //NEED STE CLASS @class
         /* WRITE ME */
     }
