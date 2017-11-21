@@ -47,6 +47,41 @@ public class AVRgenVisitor extends DepthFirstVisitor {
        System.err.println("Node not implemented in AVRgenVisitor, " + node.getClass());
    }
 
+   public void visitLtexp(LtExp node) {
+     String label0=  "MJ_L" + labelCounter++;
+     String label1=  "MJ_L" + labelCounter++;
+     String label2=  "MJ_L" + labelCounter++;
+
+     out.println("\t# lt expression" +
+                "\n\tpop \tr18" +
+                "\n\tpop \tr24\n" +
+                "\tcp r24, r18\n" +
+                "\tbrlt "+ label1 + "\n" +
+                "\n\n" + "#Load false" + "\n" + label0 + ":" +
+                "\n\tldi \tr24, 0\n" +
+                "\tjmp" + label2 + "\n\n# load true" +
+                "\n" + label1 + ":" + "\n" +
+                "\tldi \tr24, 1\n" +
+                "\n# push results of lt" +
+                "\n" + label2 + ":\n" +
+                "\tpush \tr24\n"
+     );
+
+   }
+
+   public void visitMeggyToneStart(MeggyToneStart node) {
+      // Might need to add accepting the second param. dunno
+
+      out.println("\t#MEGGY.STARTTONE" +
+                  "\n\tpop \tr22\n" +
+                  "\tpop \tr23" +
+                  "\n\tpop \tr24" +
+                  "\n\tpop \tr24" +
+                  "\n\tcall \t_Z10Tone_Startjj"
+      );
+
+   }
+
 
    public void visitAndExp(AndExp node)
    {
@@ -344,6 +379,13 @@ Start PA3 Grammar Typechecking
     public void outColorExp(ColorLiteral node) {
       out.println("\tldi \tr22, "+ node.getIntValue() + "\n" +
                   "\tpush \tr22"
+      );
+    }
+    public void outToneExp(ToneLiteral node) {
+      out.println("\tldi \tr25, hi8( "+ node.getIntValue() + ")\n" +
+                  "\tldi \tr24, lo8(" + node.getIntValue() + ")\n" +
+                  "\tpush \tr25\n" +
+                  "\tpush \tr24\n"
       );
     }
 

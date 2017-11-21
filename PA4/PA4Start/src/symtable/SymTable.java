@@ -22,6 +22,7 @@ public class SymTable {
 
 
     public SymTable() {
+      mGlobalScope = null; //kek no idea
 
       //write this
     }

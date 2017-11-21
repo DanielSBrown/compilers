@@ -103,6 +103,7 @@ non terminal ArrayList<IClassDecl> top_declaration_list;
 
 /* Declare precedence and associativity  here */
 precedence left AND, EQUAL;
+precedence left LT;
 precedence left PLUS, MINUS;
 precedence left TIMES;
 
@@ -149,12 +150,12 @@ class_declaration_list ::=
     t1.add(t);
     RESULT = t1;
     :}
-    | top_class_declaration:t top_declaration_list: c1 {:         //WHAT DO YOU NEED CHILDCLASSDECL FOR?
+    | top_class_declaration:t class_declaration_list: c1 {:
       c1.add(t);
       RESULT = c1;
       :}
       ;
-
+/*
       top_declaration_list ::=
           top_class_declaration:c {:
             ArrayList<IClassDecl> t1 = new ArrayList<IClassDecl>();
@@ -167,9 +168,10 @@ class_declaration_list ::=
               RESULT = c1;
             :}
     ;
+    */
 
 
-  child_declaration_list ::=
+/* child_declaration_list ::=
       child_class_declaration:c {:
         ArrayList<IClassDecl> t1 = new ArrayList<IClassDecl>();
         t1.add(c);
@@ -181,7 +183,7 @@ class_declaration_list ::=
           RESULT = c1;
         :}
 ;
-
+*/
 top_class_declaration ::=
     CLASS:a ID: name
     LBRACE method_declaration_list:list RBRACE {:
@@ -193,7 +195,7 @@ top_class_declaration ::=
         :}
 
     ;
-
+/*
     child_class_declaration ::=
         CLASS:a ID: name
         LBRACE method_declaration_list:list RBRACE {:
@@ -207,7 +209,7 @@ top_class_declaration ::=
             :}
 
         ;
-
+*/
 
 method_declaration ::=
     PUBLIC type:t ID:id  LPAREN method_param_list:p RPAREN
@@ -344,7 +346,10 @@ BOOLEAN:b
 /*dot_expr ::= */
 
     exp ::=
-        exp:e AND:op exp:e1
+        exp:e LT:op exp:e1 {:
+          RESULT = new LtExp(op.line, op.pos, e, e1);
+          :}
+      |  exp:e AND:op exp:e1
           {:
             RESULT = new AndExp(op.line, op.pos, e, e1);
             :}
@@ -400,7 +405,7 @@ BOOLEAN:b
           /*| exp:e DOT ID: id LPAREN exp_list RPAREN SEMI  //maybe this one too */
           /*OR*/
         /*| exp:e DOT ID:id LPAREN exp_list:list RPAREN {::}  */
-        ;
+      ;
 /* @Chase, need to add the exp . id ( exp, (exp)?)* from the grammar. It is giving shift/reduce so im gonna not worry about it now and take it out.
 */
 
