@@ -81,6 +81,10 @@ Start PA2 Grammar Typechecking
      Type xexpType = this.mCurrentST.getExpType(node.getXExp());
      Type yexpType = this.mCurrentST.getExpType(node.getYExp());
      Type cexpType = this.mCurrentST.getExpType(node.getColor());
+     System.out.println(xexpType);
+     System.out.println(yexpType);
+     System.out.println(cexpType);
+
      if (xexpType==Type.BYTE && yexpType==Type.BYTE && cexpType==Type.COLOR) {
        this.mCurrentST.setExpType(node, Type.VOID);
      }
@@ -156,6 +160,23 @@ Start PA3 Grammar Typechecking
                      node.getLExp().getLine(),
                      node.getLExp().getPos());
       }
+    }
+
+    public void outLtExp(LtExp node) {
+      Type lexpType = this.mCurrentST.getExpType(node.getLExp());
+      Type rexpType = this.mCurrentST.getExpType(node.getRExp());
+
+      if ((lexpType==Type.INT  || lexpType==Type.BYTE) &&
+          (rexpType==Type.INT  || rexpType==Type.BYTE)
+         ){
+          this.mCurrentST.setExpType(node, Type.BOOL);
+      } else {
+          throw new SemanticException(
+                  "Operands to < operator must be INT or BYTE",
+                  node.getLExp().getLine(),
+                  node.getLExp().getPos());
+      }
+
     }
 
     public void outMulExp(MulExp node) {
@@ -287,6 +308,29 @@ Start PA3 Grammar Typechecking
 
     }
     public void outIntegerExp(IntLiteral node) {
+    }
+
+
+/* PA4 BOIIIIIIIII */
+    public void outByteType(ByteType node) {
+//nada
+    }
+
+    public void outVoidType(VoidType node) {
+//nada
+    }
+
+    public void outNewExp(NewExp node) {
+ //nada
+    }
+    public void outCallStatement(CallStatement node) {
+    }
+    public void outFormal(Formal node) {
+      mCurrentST.setExpType(node, null); //Look here;
+
+    }
+    public void outIdLiteral(IdLiteral node) {
+          //might need something here
     }
 
 
