@@ -17,8 +17,8 @@ import exceptions.InternalException;
 public class SymTable {
     private final HashMap<Node,Type> mExpType = new HashMap<Node,Type>();
 
-    //mGlobalScope
-    //mScopeStack
+    private Scope mGlobalScope;
+    private Stack<Scope> mScopeStack = new Stack<Scope>();
 
 
     public SymTable() {
