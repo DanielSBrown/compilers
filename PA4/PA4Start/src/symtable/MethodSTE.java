@@ -16,6 +16,11 @@ public class MethodSTE extends STE{
         mScope = null;
     }
 
+    public MethodSTE(String sig, Scope sc){
+        mSignature = sig;
+        mScope = sc;
+    }
+
 
     public String getSignature(){
         return mSignature;

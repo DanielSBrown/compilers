@@ -19,12 +19,14 @@ public class Scope{
   private final HashMap<String, STE> mHashMap = new HashMap<String, STE>();
   private Scope mEnclosing;
 
-
-
   public STE STElookup(String id){
       STE ste = null;
 
       return ste;
+  }
+
+  public void insert(STE ste){
+
   }
 
 
