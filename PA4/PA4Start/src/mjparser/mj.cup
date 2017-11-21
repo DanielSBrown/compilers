@@ -145,15 +145,11 @@ main_class ::=
         RBRACE
     ;
 class_declaration_list ::=
-  top_class_declaration:t {:
-    ArrayList<IClassDecl> t1 = new ArrayList<IClassDecl>();
-    t1.add(t);
-    RESULT = t1;
-    :}
-    | top_class_declaration:t class_declaration_list: c1 {:
+     top_class_declaration:t class_declaration_list: c1 {:
       c1.add(t);
       RESULT = c1;
       :}
+      | {:RESULT = new ArrayList<IClassDecl>();:}
       ;
 /*
       top_declaration_list ::=
@@ -307,6 +303,8 @@ BOOLEAN:b
             System.out.println("Set pix");
             RESULT = new MeggySetPixel(op.line, op.pos, a, b, color);
           :}
+        | MEGGYTONESTART:op LPAREN exp:e COMMA exp:e1 RPAREN SEMI {:
+          RESULT = new MeggyToneStart(op.line, op.pos, e, e1);:}
         | MEGGYDELAY:op LPAREN exp:e RPAREN SEMI
           {:
             System.out.println("Delay");
@@ -393,6 +391,8 @@ BOOLEAN:b
           {: RESULT = new TrueLiteral(t.line, t.pos, t.lexeme, t.value);:}
         | FALSE:f
           {:RESULT = new FalseLiteral(f.line, f.pos, f.lexeme, f.value); :}
+        | TONE_LITERAL:t
+          {:RESULT = new ToneLiteral(t.line, t.pos, t.lexeme, t.value);:}
         | NOT:op exp:e
           {:RESULT = new NotExp(op.line,op.pos, e); :}
         | LPAREN exp:e RPAREN
