@@ -11,13 +11,15 @@ public class MethodSTE extends STE{
     private Scope mScope;
 
 
-    public MethodSTE(){
-        mSignature = null;
-        mScope = null;
-    }
+    // public MethodSTE(){
+    //     super();
+    //     mSignature = null;
+    //     mScope = null;
+    // }
 
-    public MethodSTE(String sig, Scope sc){
-        mSignature = sig;
+    public MethodSTE(String name, String signature, Scope sc){
+        super(name);
+        mSignature = signature;
         mScope = sc;
     }
 

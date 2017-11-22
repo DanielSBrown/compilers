@@ -16,12 +16,13 @@ public class VarSTE extends STE{
         mOffset = -1;
     }
 
-    public VarSTE(Type t, String base, int off){
+    public VarSTE(String name, Type t, String base, int off){
+        super(name);
         mType = t;
         mBase = base;
         mOffset = off;
     }
-    
+
 
     public Type getType(){
         return mType;

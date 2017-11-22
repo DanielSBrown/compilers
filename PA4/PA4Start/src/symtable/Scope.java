@@ -19,6 +19,15 @@ public class Scope{
   private final HashMap<String, STE> mHashMap = new HashMap<String, STE>();
   private Scope mEnclosing;
 
+  public Scope(){
+      mEnclosing = null;
+
+  }
+
+  public Scope(Scope enclosing){
+      mEnclosing = enclosing;
+  }
+
   public STE STElookup(String id){
       STE ste = null;
       ste = mHashMap.get(id);

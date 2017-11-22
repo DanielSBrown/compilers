@@ -27,6 +27,10 @@ public class SymTable {
       //write this
     }
 
+    public SymTable(Scope globalScope){
+        mGlobalScope = globalScope;
+    }
+
 
     /** Lookup a symbol in this symbol table.
  * Starts looking in innermost scope and then
@@ -74,7 +78,7 @@ public class SymTable {
             //Throw an Error
         }
 
-        
+
         //NEED STE CLASS @class
         /* WRITE ME */
     }
@@ -86,12 +90,15 @@ public class SymTable {
      */
 
     public void pushScope(String id) {
-        /* WRITE ME */
+        STE ste = lookup(id);
+        STE mste = null;
+        mste = (MethodSTE) ste; //@Danny I tried to cast as a methodSTE to try to get access to getScope();
+        mScopeStack.push(mste.getScope());
     }
 
 
     public void popScope() {
-        /* WRITE ME */
+        mScopeStack.pop();
     }
 
 
