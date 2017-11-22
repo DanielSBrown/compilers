@@ -73,13 +73,16 @@ public class BuildSymTable extends DepthFirstVisitor {
         if(s.lookup(name) == null){
             //Create func signature object of some kind
             //@Danny trying to figure this out
-            
+
             //Create a methodSTE
             MethodSTE ste = new MethodSTE(name,  signature, s.viewScope());
             //Insert the STE into the symtable with symtable.insert
             s.insert(ste);
         }
         else{
+          throw new SemanticException(
+          "Name " + node.getName() + "() already exists\n",node.getLine(),node.getPos()
+          );
             //Duplicate method name exists
             //throw an Error
         }
