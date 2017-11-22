@@ -101,6 +101,10 @@ public class SymTable {
         mScopeStack.pop();
     }
 
+    public Scope viewScope(){
+        return mScopeStack.peek();
+    }
+
 
     public void setExpType(Node exp, Type t)
     {
