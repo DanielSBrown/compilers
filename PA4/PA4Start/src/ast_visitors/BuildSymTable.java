@@ -11,6 +11,8 @@ import java.util.*;
 import symtable.*;
 import ast.visitor.DepthFirstVisitor;
 import ast.node.*;
+import exceptions.SemanticException;
+
 
 /**
  * We extend the DepthFirstAdapter.

@@ -179,6 +179,21 @@ Start PA3 Grammar Typechecking
 
     }
 
+    public void outMethodDecl(MethodDecl node){      //TODO
+    }
+
+
+    public void outMeggyToneStart(MeggyToneStart node) {
+      Type texpType = this.mCurrentST.getExpType(node.getToneExp());
+      Type dexpType = this.mCurrentST.getExpType(node.getDurationExp());
+      if (texpType != Type.TONE && dexpType != Type.INT) {
+        throw new SemanticException(
+                "Operands to < operator must be INT or BYTE",
+                node.getToneExp().getLine(),
+                node.getToneExp().getPos());
+      }
+    }
+
     public void outMulExp(MulExp node) {
       Type lexpType = this.mCurrentST.getExpType(node.getLExp());
       Type rexpType = this.mCurrentST.getExpType(node.getRExp());
