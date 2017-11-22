@@ -13,7 +13,7 @@ public class VarSTE extends STE{
     public VarSTE(){
         mType = null;
         mBase = null;
-        mOffset = -1;
+        mOffset = 0;
     }
 
     public VarSTE(String name, Type t, String base, int off){

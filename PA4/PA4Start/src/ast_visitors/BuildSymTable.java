@@ -7,7 +7,7 @@
 package ast_visitors;
 
 import java.io.PrintWriter;
-import java.util.Stack;
+import java.util.*;
 import symtable.*;
 import ast.visitor.DepthFirstVisitor;
 import ast.node.*;
@@ -65,15 +65,23 @@ public class BuildSymTable extends DepthFirstVisitor {
 
    }
 
-
+//slides 16,17,18
    public void inMethodDecl(MethodDecl node){
         //lookup method name in current sym table to see if there are dups
-        String signature = null;
+        String signature = "( ";
         String name = node.getName();
+
+        //signature generation?
+        LinkedList<Formal> paramlist = node.getFormals();
+        for(Formal p : paramlist){
+            signature += p.getType() + " ";
+        }
+        signature += " ) returns " + node.getType();
+
         if(s.lookup(name) == null){
             //Create func signature object of some kind
             //@Danny trying to figure this out
-            
+
             //Create a methodSTE
             MethodSTE ste = new MethodSTE(name,  signature, s.viewScope());
             //Insert the STE into the symtable with symtable.insert
@@ -83,6 +91,21 @@ public class BuildSymTable extends DepthFirstVisitor {
             //Duplicate method name exists
             //throw an Error
         }
+        s.pushScope(name);
+        //set current offset in visitor to 1? @Danny
+   }
+
+   public void outMethodDecl(MethodDecl node){
+       //store number of bytes needed for param as size of the method ?
+
+
+   }
+
+   public void outFormal(){
+       //i think this needs to be similar to inMethodDecl() but for VarSTE creation
+       //create VarSTE with current method offset ?
+       //increment visitor-maintained offset based on the type of the formal variable
+       //call s.insert()
 
    }
 
