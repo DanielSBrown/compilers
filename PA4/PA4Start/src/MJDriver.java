@@ -69,7 +69,7 @@ public class MJDriver {
           // java.io.PrintStream STout =
           //   new java.io.PrintStream(
           //       new java.io.FileOutputStream(filename + ".ST.dot"));
-          // System.out.println("Printing symbol table to " + filename + ".ST.dot");
+          System.out.println("Printing symbol table to " + filename + ".ST.dot");
           // globalST.outputDot(STout);
 
 // //          perform type checking

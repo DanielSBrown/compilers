@@ -91,8 +91,8 @@ public class SymTable {
 
     public void pushScope(String id) {
         STE ste = lookup(id);
-        STE mste = null;
-        mste = (MethodSTE) ste; //@Danny I tried to cast as a methodSTE to try to get access to getScope();
+        MethodSTE mste = null;
+        mste = (MethodSTE)ste; //@Danny I tried to cast as a methodSTE to try to get access to getScope();
         mScopeStack.push(mste.getScope());
     }
 
