@@ -75,7 +75,7 @@ public class SymTable {
         boolean success = false;
         success = currentScope.insert(ste);
         if(success == false){
-            //Throw an Error
+            System.out.println("*** Failed to insert STE ***");
         }
 
 

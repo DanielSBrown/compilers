@@ -68,7 +68,7 @@ public class MJDriver {
 //         // print ast to file
           java.io.PrintStream STout = new java.io.PrintStream(new java.io.FileOutputStream(filename + ".ST.dot"));
           System.out.println("Printing symbol table to " + filename + ".ST.dot");
-          globalST.outputDot(STout);
+          //globalST.outputDot(STout); //Left this commented out to make 
 
 // //          perform type checking
          ast_root.accept(new CheckTypes(globalST));
