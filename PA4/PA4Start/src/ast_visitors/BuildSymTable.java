@@ -65,6 +65,16 @@ public class BuildSymTable extends DepthFirstVisitor {
 
    }
 
+
+   public void inMethodDecl(){
+        //lookupmethod name in current sym table to see if there are dups
+        //Create func signature object of some kind
+        //Create a methodSTE
+        //Insert the STE into the symtable with symtable.insert
+        
+
+   }
+
    public SymTable getSymTable() {
      return s;
    }
