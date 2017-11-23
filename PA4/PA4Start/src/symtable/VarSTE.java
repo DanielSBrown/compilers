@@ -11,9 +11,25 @@ public class VarSTE extends STE{
     private int mOffset;
 
     public VarSTE(){
+        super("test");
         mType = null;
         mBase = null;
         mOffset = 0;
+    }
+
+    // public VarSTE(String name){
+    //     super(name);
+    //     mType = null;
+    //     mBase = null;
+    //     mOffset = 0;
+    // }
+    //
+    public VarSTE(String name, String base, int off){
+        super(name);
+        mType = null;
+        mBase = base;
+        mOffset = off;
+
     }
 
     public VarSTE(String name, Type t, String base, int off){
