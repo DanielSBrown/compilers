@@ -18,10 +18,17 @@ public class Scope{
 
   private final HashMap<String, STE> mHashMap = new HashMap<String, STE>();
   private Scope mEnclosing;
+  private String name;
+  protected static final Scope G = new Scope();
 
   public Scope(){
       mEnclosing = null;
+      name = "Global";
 
+  }
+
+  public String getName() {
+    return this.name;
   }
 
   public Scope(Scope enclosing){

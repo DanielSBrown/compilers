@@ -16,14 +16,16 @@ import exceptions.InternalException;
  */
 public class SymTable {
     private final HashMap<Node,Type> mExpType = new HashMap<Node,Type>();
-
-    private Scope mGlobalScope;
+    private String SymName;
+    private Scope mGlobalScope = Scope.G;
     private Stack<Scope> mScopeStack = new Stack<Scope>();
 
 
     public SymTable() {
-      mGlobalScope = null; //kek no idea
-
+      mScopeStack.push(mGlobalScope); //kek no idea
+      System.out.println(mGlobalScope.getName());
+      SymName = "Global";
+      System.out.println(mScopeStack.isEmpty());
       //write this
     }
 
@@ -40,13 +42,16 @@ public class SymTable {
     public STE lookup(String sym) {
     /* WRITE ME */
         STE ste = null;
+        Stack<Scope> t = (Stack<Scope>) mScopeStack.clone();
         while(mScopeStack.isEmpty() != true){
             ste = lookupInnermost(sym);
             if(ste != null){
                 return ste;
             }
-            mScopeStack.pop(); //@Danny: currently destroys stack on lookup
+            System.out.println("Here is where it fucks up");
+            mScopeStack.pop(); //@Danny: currently destroys stack on lookup // @Chase: yeah it does
         }
+        mScopeStack = t;
         return ste;
     }
 
@@ -102,6 +107,7 @@ public class SymTable {
     }
 
     public Scope viewScope(){
+        System.out.println(mScopeStack.isEmpty());
         return mScopeStack.peek();
     }
 

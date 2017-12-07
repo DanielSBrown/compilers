@@ -101,6 +101,7 @@ public class BuildSymTable extends DepthFirstVisitor {
    }
 
    public void outMethodDecl(MethodDecl node){
+     s.popScope();
        //store number of bytes needed for param as size of the method ?
 
 
