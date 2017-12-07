@@ -107,11 +107,37 @@ public class BuildSymTable extends DepthFirstVisitor {
 
    }
 
-   public void outFormal(){
+   public void outFormal(MethodDecl node){
        //i think this needs to be similar to inMethodDecl() but for VarSTE creation
        //create VarSTE with current method offset ?
        //increment visitor-maintained offset based on the type of the formal variable
        //call s.insert()
+       LinkedList<VarDecl> paramlist = node.getVarDecls();
+
+       for(VarDecl p : paramlist){
+           String name = p.getName();
+           if(s.lookup(name) == null){
+               //Create func signature object of some kind
+               //@Danny trying to figure this out
+               String base = "Y";
+               int tSize = 1;
+               //Type t = node.getType();
+                //getAVRTypeSize()
+               //Create a methodSTE
+               VarSTE ste = new VarSTE(name, base, tSize);
+               //Insert the STE into the symtable with symtable.insert
+               s.insert(ste);
+           }
+           else{
+             throw new SemanticException(
+             "Name " + node.getName() + "() already exists\n",node.getLine(),node.getPos()
+             );
+               //Duplicate method name exists
+               //throw an Error
+           }
+
+       }
+      // s.pushScope(name);
 
    }
 
