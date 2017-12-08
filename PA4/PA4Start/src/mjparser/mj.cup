@@ -245,7 +245,7 @@ returns ::=
 ;
 method_declaration ::=
     PUBLIC type:t identifier:id  LPAREN method_param_list:p RPAREN
-    LBRACE vardec_list:v statement_list:list returns:r SEMI RBRACE {:
+    LBRACE vardec_list:v statement_list:list returns:r RBRACE {:
       //  ArrayList<VarDecl> v = new ArrayList<VarDecl>(); // look here pls. PA4 no more
         RESULT = new MethodDecl(t.getLine(), t.getPos(), t, id.getLexeme(), p, v, list, r ); // look at this chase. Since we have no vardecls, is that list null? look at MethodDecl.java.
       :}
@@ -328,6 +328,7 @@ BOOLEAN:b
       {:
         RESULT = new WhileStatement(op.line, op.pos, e, s);
       :}
+      | {::}
       ;
 
     statement ::=
@@ -459,14 +460,9 @@ RESULT = p;
 */
 
     statement_list ::=
-        statement:s
-        {:
-          ArrayList<IStatement> s1 = new ArrayList<IStatement>();
-          s1.add(s);
-          RESULT = s1;
-          :}
-        | statement_list:s1 statement:s {:
+         statement:s statement_list:s1  {:
              s1.add(s);
              RESULT = s1;
           :}
+          | {:RESULT = new ArrayList<IStatement>();:}
     ;
