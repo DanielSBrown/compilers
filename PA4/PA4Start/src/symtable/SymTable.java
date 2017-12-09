@@ -48,7 +48,6 @@ public class SymTable {
             if(ste != null){
                 return ste;
             }
-            System.out.println("Here is where it fucks up");
             mScopeStack.pop(); //@Danny: currently destroys stack on lookup // @Chase: yeah it does
         }
         mScopeStack = t;

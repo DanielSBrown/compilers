@@ -20,6 +20,7 @@ import java.util.*;
 
 import symtable.SymTable;
 import symtable.Type;
+import symtable.VarSTE;
 import exceptions.InternalException;
 import exceptions.SemanticException;
 
@@ -35,6 +36,17 @@ public class CheckTypes extends DepthFirstVisitor
       mCurrentST = st;
    }
 
+   public void outVarDecl(VarDecl node) {
+     //Do nothing?
+     //@ME NO, what types can a variable NOT be? VOID
+
+     if (mCurrentST.getExpType(node.getType()) == null) {         //does that for void for some reason
+       throw new SemanticException(
+       "Invalid type for variable declarations; cannot be void",
+       node.getLine(), node.getPos()
+       );
+     }
+   }
    //========================= Overriding the visitor interface
 
    public void defaultOut(Node node) {
@@ -281,7 +293,8 @@ Start PA3 Grammar Typechecking
     }
 
     public void outTrueExp(TrueLiteral node){
-      if (node.getLexeme() == "true") {
+      if (node.getLexeme().equals( "true")) {
+        this.mCurrentST.setExpType(node, Type.BOOL);
       }
       else {
         throw new SemanticException(
@@ -292,8 +305,17 @@ Start PA3 Grammar Typechecking
       }
     }
 
+    public void outAssignStatement(AssignStatement node) {
+      //VarSTE temp = (VarSTE) this.mCurrentST.lookup(node.getId());  // should get STE for the left side of equation
+      //System.out.println(temp);
+    }
+
+    public void outThisExp(ThisLiteral node) {
+
+    }
+
     public void outFalseExp(FalseLiteral node){
-      if (node.getLexeme() == "false") {
+      if (node.getLexeme().equals("false")) {
       }
       else {
         throw new SemanticException(
