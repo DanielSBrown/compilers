@@ -94,6 +94,7 @@ Start PA2 Grammar Typechecking
      Type yexpType = this.mCurrentST.getExpType(node.getYExp());
      Type cexpType = this.mCurrentST.getExpType(node.getColor());
 
+
      if (xexpType==Type.BYTE && yexpType==Type.BYTE && cexpType==Type.COLOR) {
        this.mCurrentST.setExpType(node, Type.VOID);
      }

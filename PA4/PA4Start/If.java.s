@@ -18,37 +18,56 @@ main:
     call _Z18MeggyJrSimpleSetupv 
     /* Need to call this so that the meggy library gets set up */
 # If Statement
+
 	ldi 	r22, 1
 	push 	r22
 	pop 	r24
 	push 	r24
 	ldi 	r25, 0
 	cp 	r24, r25
-	breq   ML_3
-	jmp  ML_2
+	breq   MJ_L7
+	jmp  MJ_L6
 
-ML_3:
+MJ_L7:
 	pop 	r24
 	ldi 	r22, 1
 	push 	r22
 	pop 	r24
 	push 	r24
 
-ML_2:
+MJ_L6:
 	pop 	r24
 	ldi 	r25, 0
 
 	cp 	r24, r25
-	brne  ML_0
-	jmp  ML_0
+	brne  MJ_L4
+	jmp  MJ_L3
 
-ML_0:
-	jmp   ML_1
+MJ_L4:
+	jmp   MJ_L5
 
-ML_0:
+MJ_L3:
 #Done
 
-ML_1:
+MJ_L5:
+
+# Load condition and branch iff false 
+ # load a one byte exp off stack
+	pop 	r24
+	#Load zero into reg
+	ldi 	r25, 0
+
+ #use cp to set SREG
+	cp 	r24, r25
+	#WANT breq to someMJ_L0
+	brne 	MJ_L1
+	jmp 	MJ_L0
+
+
+#Then label for if
+MJ_L1:
+
+
 
 
 	ldi	r24, lo8(1)
@@ -91,28 +110,12 @@ ML_1:
 	push 	r24
 
 
+#sub
+	sub 	r24, r18
+	sbc 	r25, r19
 
-	ldi	r24, lo8(5)
-
-	ldi	r25, hi8(5)
-
-
-	push	r25
-
-
-	push	r24
-
-
-	ldi	r24, lo8(1)
-
-	ldi	r25, hi8(1)
-
-
-	push	r25
-
-
-	push	r24
-
+	push 	r25
+	push 	r24
 	pop 	r24
 	pop 	r25
 	push 	r24
@@ -127,6 +130,15 @@ ML_1:
 	call 	_Z12DisplaySlatev
 
 
+	jmp 	MJ_L2
+
+
+	# else label for ifMJ_L0:
+
+
+MJ_L0:
+
+
 	ldi	r24, lo8(1)
 
 	ldi	r25, hi8(1)
@@ -136,6 +148,16 @@ ML_1:
 
 
 	push	r24
+
+	#negation
+	pop 	r24
+	pop 	r25
+	ldi 	r22, 0
+	ldi 	r23, 0
+	sub 	r22, r24
+	sbc 	r23, r25
+	push 	r23
+	push 	r22
 
 	pop 	r24
 	pop 	r25
@@ -158,10 +180,31 @@ ML_1:
 	push 	r24
 
 
+	#negation
+	pop 	r24
+	pop 	r25
+	ldi 	r22, 0
+	ldi 	r23, 0
+	sub 	r22, r24
+	sbc 	r23, r25
+	push 	r23
+	push 	r22
+
 	pop 	r24
 	pop 	r25
 	push 	r24
 
+
+#mult starting
+	pop 	r18
+	pop 	r22
+	mov 	r24, r18
+	mov 	r26, r22
+	muls 	r24, r26
+	push 	r1
+	push 	r0
+	eor 	r0, r0
+	eor 	r1, r1
 
 	pop 	r24
 	pop 	r25
@@ -191,6 +234,10 @@ ML_1:
 	pop r24
 	call 	_Z6DrawPxhhh
 	call 	_Z12DisplaySlatev
+
+
+MJ_L2:
+
 
 
 

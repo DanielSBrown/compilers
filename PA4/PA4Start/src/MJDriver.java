@@ -64,11 +64,12 @@ public class MJDriver {
           BuildSymTable stVisitor = new BuildSymTable();
           ast_root.accept(stVisitor);
           symtable.SymTable globalST = stVisitor.getSymTable();
+          System.out.println(globalST);
 
 //         // print ast to file
           java.io.PrintStream STout = new java.io.PrintStream(new java.io.FileOutputStream(filename + ".ST.dot"));
           System.out.println("Printing symbol table to " + filename + ".ST.dot");
-          //globalST.outputDot(STout); //Left this commented out to make 
+      //    globalST.outputDot(STout); //Left this commented out to make
 
 // //          perform type checking
          ast_root.accept(new CheckTypes(globalST));

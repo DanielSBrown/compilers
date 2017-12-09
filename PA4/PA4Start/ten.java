@@ -9,3 +9,7 @@ class ten {
 
 
 }
+class foo {
+  byte lx;
+  byte lx;
+}

@@ -106,7 +106,6 @@ public class SymTable {
     }
 
     public Scope viewScope(){
-        System.out.println(mScopeStack.isEmpty());
         return mScopeStack.peek();
     }
 
@@ -121,6 +120,8 @@ public class SymTable {
     {
     	return this.mExpType.get(exp);
     }
+
+
 
 /*
  */

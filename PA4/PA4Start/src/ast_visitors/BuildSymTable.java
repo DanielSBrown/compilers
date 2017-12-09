@@ -70,15 +70,16 @@ public class BuildSymTable extends DepthFirstVisitor {
 //slides 16,17,18
    public void inMethodDecl(MethodDecl node){
         //lookup method name in current sym table to see if there are dups
-        String signature = "( ";
+        String signature = "(";
         String name = node.getName();
 
         //signature generation?
         LinkedList<Formal> paramlist = node.getFormals();
         for(Formal p : paramlist){
-            signature += p.getType() + " ";
+            signature += p.getType() + ", ";
         }
-        signature += " ) returns " + node.getType();
+        signature += ") returns " + node.getType();
+        System.out.println(signature);
 
         if(s.lookup(name) == null){
             //Create func signature object of some kind
@@ -97,6 +98,7 @@ public class BuildSymTable extends DepthFirstVisitor {
             //throw an Error
         }
         s.pushScope(name);
+      //  outMethodDecl(node);
         //set current offset in visitor to 1? @Danny
    }
 
@@ -105,6 +107,26 @@ public class BuildSymTable extends DepthFirstVisitor {
        //store number of bytes needed for param as size of the method ?
 
 
+   }
+
+   public void outClassType(ClassType node) {
+
+   }
+
+   public void outThisExp(ThisLiteral node) {
+   }
+   public void outIdExp(IdLiteral node) {
+
+   }
+   public void outNewExp(NewExp node) {
+
+   }
+   public void outVarDecl(VarDecl node) {
+     Type t = s.getExpType(node.getType());
+     System.out.println("t is:" + t);
+     Scope current = s.viewScope();
+     VarSTE myvar = new VarSTE(node.getName(),t, "base1", current.getOffset());
+     s.insert(myvar);
    }
 
    public void outFormal(MethodDecl node){

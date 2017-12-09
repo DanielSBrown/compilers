@@ -19,6 +19,7 @@ public class Scope{
   private final HashMap<String, STE> mHashMap = new HashMap<String, STE>();
   private Scope mEnclosing;
   private String name;
+  private int offset;
   protected static final Scope G = new Scope();
 
   public Scope(){
@@ -30,6 +31,12 @@ public class Scope{
   public String getName() {
     return this.name;
   }
+  public int getOffset() {
+    return offset;
+  }
+  public void setOffset(int i){
+  offset = i;
+}
 
   public Scope(Scope enclosing){
       mEnclosing = enclosing;
