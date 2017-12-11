@@ -6,30 +6,30 @@ digraph ASTGraph {
 1 -> 2
 3 [ label="BlockStatement" ];
 2 -> 3
-4 [ label="CallStatement" ];
+4 [ label="MeggySetPixel" ];
 3 -> 4
-5 [ label="NewExp" ];
+5 [ label="ByteCast" ];
 4 -> 5
-6 [ label="ByteCast" ];
-4 -> 6
-7 [ label="IntLiteral\n7" ];
-6 -> 7
-8 [ label="ByteCast" ];
-4 -> 8
-9 [ label="IntLiteral\n3" ];
-8 -> 9
-10 [ label="MeggySetPixel" ];
+6 [ label="IntLiteral\n1" ];
+5 -> 6
+7 [ label="ByteCast" ];
+4 -> 7
+8 [ label="IntLiteral\n2" ];
+7 -> 8
+9 [ label="ColorLiteral\nMeggy.Color.BLUE" ];
+4 -> 9
+10 [ label="CallStatement" ];
 3 -> 10
-11 [ label="ByteCast" ];
+11 [ label="NewExp" ];
 10 -> 11
-12 [ label="IntLiteral\n1" ];
-11 -> 12
-13 [ label="ByteCast" ];
-10 -> 13
-14 [ label="IntLiteral\n2" ];
-13 -> 14
-15 [ label="ColorLiteral\nMeggy.Color.BLUE" ];
-10 -> 15
+12 [ label="ByteCast" ];
+10 -> 12
+13 [ label="IntLiteral\n7" ];
+12 -> 13
+14 [ label="ByteCast" ];
+10 -> 14
+15 [ label="IntLiteral\n3" ];
+14 -> 15
 16 [ label="TopClassDecl" ];
 0 -> 16
 17 [ label="MethodDecl" ];

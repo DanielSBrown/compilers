@@ -1,6 +1,8 @@
 package symtable;
 import java.util.*;
 import ast.node.*;
+import java.io.PrintWriter;
+import java.io.PrintStream;
 
 import exceptions.InternalException;
 
@@ -104,6 +106,20 @@ public class SymTable {
     public void popScope() {
         mScopeStack.pop();
     }
+
+    public void outputDot(PrintStream printer){
+      	@SuppressWarnings("unchecked")
+  		Stack<Scope> tempScopeStack = (Stack<Scope>) mScopeStack.clone();
+  		printer.println("digraph SymTable {\n"+
+  			"\tgraph [rankdir=\"LR\"];\n"+
+  			"\tnode [shape=record];");
+  		mGlobalScope.outputDot(printer);
+  		while(!tempScopeStack.isEmpty()){
+  			tempScopeStack.peek().outputDot(printer);
+  			tempScopeStack.pop();
+  		}
+  		printer.println("}");
+  	}
 
     public Scope viewScope(){
         return mScopeStack.peek();

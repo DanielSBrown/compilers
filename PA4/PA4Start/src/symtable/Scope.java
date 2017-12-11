@@ -1,6 +1,8 @@
 package symtable;
 import java.util.*;
 import ast.node.*;
+import java.io.PrintWriter;
+import java.io.PrintStream;
 
 import exceptions.InternalException;
 
@@ -27,6 +29,13 @@ public class Scope{
       name = "Global";
 
   }
+
+  public void outputDot(PrintStream printer){
+		for(String key : mHashMap.keySet()){
+			printer.println(mHashMap.get(key).toString());
+		}
+  }
+
 
   public String getName() {
     return this.name;
