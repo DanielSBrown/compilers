@@ -79,16 +79,18 @@ public class BuildSymTable extends DepthFirstVisitor {
             signature += p.getType() + ", ";
         }
         signature += ") returns " + node.getType();
-        System.out.println(signature);
+        System.out.println("inMethodDecl signature = " + signature);
 
         if(s.lookup(name) == null){
             //Create func signature object of some kind
             //@Danny trying to figure this out
-
+            System.out.println("Method " + name + "not found creating new MethodSTE");
             //Create a methodSTE
             MethodSTE ste = new MethodSTE(name,  signature, s.viewScope());
             //Insert the STE into the symtable with symtable.insert
             s.insert(ste);
+            System.out.println("MethodSTE " + name + "inserted into symtable s");
+
         }
         else{
           throw new SemanticException(
@@ -98,35 +100,44 @@ public class BuildSymTable extends DepthFirstVisitor {
             //throw an Error
         }
         s.pushScope(name);
+        System.out.println("Scope" + name + " pushed in inMethodDecl");
+
       //  outMethodDecl(node);
         //set current offset in visitor to 1? @Danny
    }
 
    public void outMethodDecl(MethodDecl node){
      s.popScope();
+     System.out.println("Popped scope, outMethodDecl");
        //store number of bytes needed for param as size of the method ?
-
-
    }
 
    public void outClassType(ClassType node) {
-
+       System.out.println("outClassType");
    }
 
    public void outThisExp(ThisLiteral node) {
+       System.out.println("outThisExp");
    }
+
    public void outIdExp(IdLiteral node) {
-
+       System.out.println("outIdExp");
    }
+
    public void outNewExp(NewExp node) {
+       System.out.println("outNewExp");
 
    }
+
    public void outVarDecl(VarDecl node) {
      Type t = s.getExpType(node.getType());
      System.out.println("t is:" + t);
      Scope current = s.viewScope();
      VarSTE myvar = new VarSTE(node.getName(),t, "base1", current.getOffset());
+     System.out.println("Created myvar VarSTE");
      s.insert(myvar);
+     System.out.println("inserted myvar in outVarDecl");
+
    }
 
    public void outFormal(MethodDecl node){
@@ -139,6 +150,7 @@ public class BuildSymTable extends DepthFirstVisitor {
        for(VarDecl p : paramlist){
            String name = p.getName();
            if(s.lookup(name) == null){
+               System.out.println(name + "not found, creating VARSTE");
                //Create func signature object of some kind
                //@Danny trying to figure this out
                String base = "Y";
@@ -149,6 +161,7 @@ public class BuildSymTable extends DepthFirstVisitor {
                VarSTE ste = new VarSTE(name, base, tSize);
                //Insert the STE into the symtable with symtable.insert
                s.insert(ste);
+               System.out.println("VarSTE Name: " + name + "Base: " + base + "tSize: " + tSize + " inserted!");
            }
            else{
              throw new SemanticException(
@@ -160,7 +173,6 @@ public class BuildSymTable extends DepthFirstVisitor {
 
        }
       // s.pushScope(name);
-
    }
 
    public SymTable getSymTable() {
