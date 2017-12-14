@@ -113,15 +113,32 @@ public class BuildSymTable extends DepthFirstVisitor {
    }
 
    public void inTopClassDecl(TopClassDecl node){
-       
+       String name = node.getName();
+       boolean isMain = false;
+       if(name == "main"){
+           isMain = true;
+       }
+       Scope currScope = s.viewScope();
+       if(s.lookup(name) == null){
+           System.out.println("class not found, creating ClassSTE for insert");
+           ClassSTE myClass = new ClassSTE(name, isMain, currScope);
+           s.insert(myClass);
+
+       }else{
+           throw new SemanticException(
+           "Name " + node.getName() + "() already exists\n",node.getLine(),node.getPos()
+           );
+       }
+       s.pushScope(name);
 
    }
 
    public void outTopClassDecl(TopClassDecl node){
-
-
+       System.out.println("outTopClassDecl");
+       s.popScope();
    }
 
+   
    public void outClassType(ClassType node) {
        System.out.println("outClassType");
    }

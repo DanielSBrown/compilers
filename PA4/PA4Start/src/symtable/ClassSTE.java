@@ -10,6 +10,7 @@ public class ClassSTE extends STE{
     private boolean mMain;
 
     //must be able to identify if class is main for correct type checking
+    //I don't know if we need anything else in here
     public ClassSTE(String name, boolean main, Scope sc){
 		super(name);
         mMain = main;

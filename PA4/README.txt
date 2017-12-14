@@ -8,4 +8,4 @@ Specifically, PA4Test4_incorrect will fail because it tries to instantiate a cla
 PA4Test5_incorrect fails because there is no '>' in PA4...nor is it in MeggyJava at all I don't think
 Same with PA5
 
-We tried really hard to get everything done iwth Symbol Table, but it took so long since we didn't finish PA4. Also, it ws tough to do this during exams. Please be gentle
+We tried really hard to get everything done with Symbol Table, but it took so long since we didn't finish PA4. Also, it was tough to do this during exams. Please be gentle
