@@ -112,6 +112,16 @@ public class BuildSymTable extends DepthFirstVisitor {
        //store number of bytes needed for param as size of the method ?
    }
 
+   public void inTopClassDecl(TopClassDecl node){
+       
+
+   }
+
+   public void outTopClassDecl(TopClassDecl node){
+
+
+   }
+
    public void outClassType(ClassType node) {
        System.out.println("outClassType");
    }
