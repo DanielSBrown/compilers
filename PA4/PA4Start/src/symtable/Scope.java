@@ -40,6 +40,11 @@ public class Scope{
   public String getName() {
     return this.name;
   }
+
+  public void setName(String sname){
+      name = sname;
+  }
+
   public int getOffset() {
     return offset;
   }
