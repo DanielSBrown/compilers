@@ -1,0 +1,12 @@
+digraph SymTable {
+	graph [rankdir="LR"];
+	node [shape=record];
+symtable.MethodSTE@2e5d6d97
+symtable.VarSTE@238e0d81
+symtable.VarSTE@31221be2
+symtable.MethodSTE@377dca04
+symtable.MethodSTE@2e5d6d97
+symtable.VarSTE@238e0d81
+symtable.VarSTE@31221be2
+symtable.MethodSTE@377dca04
+}
