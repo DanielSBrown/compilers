@@ -351,6 +351,10 @@ Start PA3 Grammar Typechecking
 //nada
     }
 
+    public void outIntType(IntType node) {
+
+    }
+
     public void outVoidType(VoidType node) {
 //nada
     }
@@ -366,6 +370,10 @@ Start PA3 Grammar Typechecking
     }
     public void outIdLiteral(IdLiteral node) {
           //might need something here
+    }
+
+    public void outToneExp(ToneLiteral node) {
+      //nada
     }
 
 
