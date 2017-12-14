@@ -1,0 +1,6 @@
+digraph SymTable {
+	graph [rankdir="LR"];
+	node [shape=record];
+symtable.MethodSTE@1ddc4ec2
+symtable.MethodSTE@1ddc4ec2
+}

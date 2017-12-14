@@ -1,0 +1,468 @@
+
+package mjparser;
+import java_cup.runtime.*;
+import java.util.*;
+import java.io.PrintWriter;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import ast.node.*;
+
+
+
+parser code {:
+
+    public PrintWriter out;
+    public String programName;
+
+    public void unrecovered_syntax_error(Symbol cur_SymbolValue) {
+        report_fatal_error("Fatal syntax error", cur_SymbolValue);
+    }
+
+    public void report_fatal_error(String message, Object info) {
+        report_error(message, info);
+        done_parsing();
+        Symbol SymbolValue = (Symbol)info;
+        mjparser.SymbolValue tok = (mjparser.SymbolValue)SymbolValue.value;
+        throw new mjparser.ParseException("Fatal parsing error",
+                                          tok.line, tok.pos);
+    }
+
+    public void report_error(String message, Object info) {
+        Symbol SymbolValue = (Symbol)info;
+        mjparser.SymbolValue tok = (mjparser.SymbolValue)SymbolValue.value;
+        System.err.println("[" + tok.line + "," + tok.pos + "] "
+                               + message + " at " + tok.toString() );
+    }
+
+:}
+
+/* Notice: all terminals declared here */
+terminal SymbolValue PLUS, MINUS, TIMES, LPAREN, RPAREN;
+terminal SymbolValue LBRACE, RBRACE;
+terminal SymbolValue BOOLEAN, INT;
+terminal SymbolValue BYTE;
+terminal SymbolValue MAIN, IMPORT;
+terminal SymbolValue IF, ELSE;
+terminal SymbolValue LT;
+terminal SymbolValue EQUAL;
+terminal SymbolValue AND, NOT;
+terminal SymbolValue WHILE;
+terminal SymbolValue COMMA, DOT;
+terminal SymbolValue NEW, PUBLIC, RETURN, STATIC;
+terminal SymbolValue STRING, VOID;
+terminal SymbolValue CLASS, EXTENDS;
+terminal SymbolValue LBRACKET, RBRACKET;
+terminal SymbolValue LENGTH;
+terminal SymbolValue SEMI;
+terminal SymbolValue ASSIGN;
+
+terminal SymbolValue MEGGY;
+terminal SymbolValue MEGGYCOLOR;
+terminal SymbolValue MEGGYBUTTON;
+terminal SymbolValue MEGGYTONE;
+terminal SymbolValue MEGGYSETPIXEL;
+terminal SymbolValue MEGGYSETAUXLEDS;
+terminal SymbolValue MEGGYTONESTART;
+terminal SymbolValue MEGGYDELAY;
+terminal SymbolValue MEGGYGETPIXEL;
+terminal SymbolValue MEGGYCHECKBUTTON;
+
+terminal SymbolValue INT_LITERAL, ID;
+terminal SymbolValue TRUE, FALSE;
+terminal SymbolValue COLOR_LITERAL, BUTTON_LITERAL, TONE_LITERAL;
+terminal SymbolValue THIS;
+
+/* bogus terminal for unary precedence declaration */
+terminal UMINUS;
+
+non terminal program;
+/*non terminal ArrayList<IStatement> statements;*/
+non terminal IExp exp;
+non terminal IStatement statement;
+non terminal ArrayList<IStatement> statement_list;
+non terminal MainClass main_class;
+non terminal IStatement if_stmt;
+non terminal MethodDecl method_declaration;
+non terminal IType type;
+non terminal IClassDecl top_class_declaration;
+non terminal IClassDecl child_class_declaration;
+non terminal ArrayList<MethodDecl> method_declaration_list;
+non terminal Formal method_param;
+non terminal ArrayList<Formal> method_param_list;
+non terminal ArrayList<IClassDecl> class_declaration_list;
+non terminal ArrayList<IClassDecl> child_declaration_list;
+non terminal ArrayList<IClassDecl> top_declaration_list;
+non terminal IdLiteral identifier;
+non terminal VarDecl vardec;
+non terminal ArrayList<VarDecl> vardec_list;
+non terminal IExp returns;
+non terminal CallExp dot_expr;
+non terminal ArrayList<IExp> call_param;
+
+
+
+/* Declare precedence and associativity  here */
+precedence left AND, EQUAL;
+precedence left LT;
+precedence left PLUS, MINUS;
+precedence left TIMES;
+
+
+
+/*precedence left UMINUS;*/
+precedence right NOT;
+precedence right UMINUS;
+
+
+/* Meggy Java Grammar */
+start with program;
+
+identifier ::=
+ID:id {:
+    RESULT = new IdLiteral(id.line, id.pos, id.lexeme);
+  :}
+  ;
+
+vardec ::=
+type:t identifier:id SEMI:s {:
+  RESULT = new VarDecl(s.line, s.pos, t, id.getLexeme());
+  :}
+;
+
+vardec_list ::=
+  vardec_list:l vardec:v  {:
+    l.add(v);
+    RESULT = l;
+    :}
+    |
+    {:
+      ArrayList<VarDecl> v = new ArrayList<VarDecl>();
+      RESULT = v;
+    :}
+    ;
+
+
+program ::=
+    IMPORT:a MEGGY SEMI main_class:m class_declaration_list:c{:
+    //  LinkedList<IClassDecl> clist = new LinkedList<IClassDecl>();  //Should not be hardcoded like this; can have multiple class_declarations, child and top
+//      clist.add(c);
+      RESULT = new Program(a.line, a.pos, m, c);
+      :}
+    ;
+
+main_class ::=
+        CLASS:a identifier:name
+        LBRACE PUBLIC STATIC VOID MAIN
+        LPAREN STRING LBRACKET RBRACKET identifier:param RPAREN
+        LBRACE:b
+        statement_list:list RBRACE
+          {:
+
+            if (!parser.programName.equals(name.getLexeme() + ".java")) {
+              throw new java.lang.Error();
+            }
+
+            BlockStatement block = new BlockStatement(b.line, b.pos, list);
+            RESULT = new MainClass(a.line, a.pos, name.getLexeme(), param.getLexeme(), block);
+            //currently prints null, commenting out to not ruin assembly file
+          //parser.out.println(list);
+          :}
+
+        RBRACE
+    ;
+class_declaration_list ::=
+     top_class_declaration:t class_declaration_list: c1 {:
+      c1.add(t);
+      RESULT = c1;
+      :}
+      | {:RESULT = new ArrayList<IClassDecl>();:}
+      ;
+/*
+      top_declaration_list ::=
+          top_class_declaration:c {:
+            ArrayList<IClassDecl> t1 = new ArrayList<IClassDecl>();
+            t1.add(c);
+            RESULT = t1;
+          :}
+          | top_class_declaration:c top_declaration_list: c1 {:
+
+              c1.add(c);
+              RESULT = c1;
+            :}
+    ;
+    */
+
+
+/* child_declaration_list ::=
+      child_class_declaration:c {:
+        ArrayList<IClassDecl> t1 = new ArrayList<IClassDecl>();
+        t1.add(c);
+        RESULT = t1;
+      :}
+      | child_class_declaration:c child_declaration_list: c1 {:
+
+          c1.add(c);
+          RESULT = c1;
+        :}
+;
+*/
+top_class_declaration ::=
+    CLASS:a identifier: name
+    LBRACE vardec_list:v method_declaration_list:list RBRACE {:
+      RESULT = new TopClassDecl(a.line, a.pos, name.getLexeme(), v, list);  //IClassDecl or ClassType?
+      :}
+      |CLASS:a identifier: name
+      LBRACE RBRACE {:
+        RESULT = new TopClassDecl(a.line, a.pos, name.getLexeme(), new ArrayList<VarDecl>(), null);
+        :}
+
+    ;
+/*
+    child_class_declaration ::=
+        CLASS:a ID: name
+        LBRACE method_declaration_list:list RBRACE {:
+
+          RESULT = new ChildClassDecl(a.line, a.pos, name.lexeme, null, new ArrayList<VarDecl>(), list);  // How to get parent?
+          :}
+          |CLASS:a ID: name
+          LBRACE RBRACE {:
+
+            RESULT = new ChildClassDecl(a.line, a.pos, name.lexeme, null,new ArrayList<VarDecl>(), null);
+            :}
+
+        ;
+*/
+returns ::=
+  RETURN:r exp:e SEMI {:
+    RESULT = e;
+    :}
+    | {:RESULT = null;:}
+;
+method_declaration ::=
+    PUBLIC type:t identifier:id  LPAREN method_param_list:p RPAREN
+    LBRACE vardec_list:v statement_list:list returns:r RBRACE {:
+      //  ArrayList<VarDecl> v = new ArrayList<VarDecl>(); // look here pls. PA4 no more
+        RESULT = new MethodDecl(t.getLine(), t.getPos(), t, id.getLexeme(), p, v, list, r ); // look at this chase. Since we have no vardecls, is that list null? look at MethodDecl.java.
+      :}
+  ;
+
+method_param_list ::=
+    method_param : m {:
+      ArrayList<Formal> f1 = new ArrayList<Formal>();
+      f1.add(m);
+      RESULT = f1;
+      :}
+    | method_param_list:f1 COMMA method_param:m {:
+      f1.add(m);
+      RESULT = f1;
+      :}
+      | {:ArrayList<Formal> f1 = new ArrayList<Formal>();
+        RESULT = f1;
+        :}
+      ;
+method_param ::=
+    type:t identifier:id {:
+      RESULT = new Formal(t.getLine(), t.getPos(), t, id.getLexeme());
+      :}
+    ;
+
+
+method_declaration_list ::=
+    method_declaration: m {:
+      ArrayList<MethodDecl> m1 = new ArrayList<MethodDecl>();
+      m1.add(m);
+      RESULT = m1;
+      :}
+      |
+      method_declaration_list:m1 method_declaration:m {:
+        m1.add(m);
+        RESULT = m1;
+        :}
+
+        ;
+type ::=
+BOOLEAN:b
+{: RESULT = new BoolType(b.line, b.pos); :}
+| BYTE:b
+{: RESULT = new ByteType(b.line, b.pos); :}
+|	INT:i
+{: RESULT = new IntType(i.line, i.pos); :}
+|	VOID:v
+{:RESULT = new VoidType(v.line, v.pos);:}
+|	MEGGYCOLOR:m
+{: RESULT = new VoidType(m.line, m.pos); :}
+|	MEGGYBUTTON:m
+{: RESULT = new BoolType(m.line, m.pos); :}
+|	MEGGYTONE:m
+{: RESULT = new ToneType(m.line, m.pos); :}        //Idk what MeggyTone returns. @Chase ah i see its a ToneType
+| identifier:id
+{: RESULT = new ClassType(id.getLine(), id.getPos(), id.getLexeme());:}
+;
+
+
+
+    if_stmt ::=
+    LBRACE:brace statement_list:s RBRACE {:
+      RESULT = new BlockStatement(brace.line, brace.pos, s);
+      :}
+    | MEGGYSETPIXEL:op LPAREN exp:a COMMA exp:b COMMA exp:color RPAREN SEMI
+      {:
+        System.out.println("Set pix");
+        RESULT = new MeggySetPixel(op.line, op.pos, a, b, color);
+      :}
+    | MEGGYDELAY:op LPAREN exp:e RPAREN SEMI
+      {:
+        System.out.println("Delay");
+        RESULT = new MeggyDelay(op.line, op.pos, e);
+      :}
+    |IF:op LPAREN exp:e RPAREN if_stmt:s ELSE if_stmt:s2
+    {:
+      RESULT = new IfStatement(op.line, op.pos, e, s, s2);
+    :}
+    | WHILE:op LPAREN exp:e RPAREN if_stmt:s
+      {:
+        RESULT = new WhileStatement(op.line, op.pos, e, s);
+      :}
+      | {::}
+      ;
+
+    statement ::=
+        LBRACE:brace statement_list:s RBRACE {:
+          RESULT = new BlockStatement(brace.line, brace.pos, s);
+          :}
+        | MEGGYSETPIXEL:op LPAREN exp:a COMMA exp:b COMMA exp:color RPAREN SEMI
+          {:
+            System.out.println("Set pix");
+            RESULT = new MeggySetPixel(op.line, op.pos, a, b, color);
+          :}
+        | MEGGYTONESTART:op LPAREN exp:e COMMA exp:e1 RPAREN SEMI {:
+          RESULT = new MeggyToneStart(op.line, op.pos, e, e1);:}
+        | MEGGYDELAY:op LPAREN exp:e RPAREN SEMI
+          {:
+            System.out.println("Delay");
+            RESULT = new MeggyDelay(op.line, op.pos, e);
+          :}
+        | IF:op LPAREN exp:e RPAREN statement:s
+        {:
+          RESULT = new IfStatement(op.line, op.pos, e, s, null);
+          :}
+        |IF:op LPAREN exp:e RPAREN if_stmt:s ELSE statement:s2
+        {:
+          RESULT = new IfStatement(op.line, op.pos, e, s, s2);
+        :}
+        | WHILE:op LPAREN exp:e RPAREN statement:s
+          {:
+            RESULT = new WhileStatement(op.line, op.pos, e, s);
+          :}
+          | identifier: id ASSIGN:a exp:e SEMI {:
+                                  // Asssignemnt operation. I think this is right? @Chase?
+            RESULT = new AssignStatement(a.line, a.pos, id.getLexeme(), e);
+            :}
+        | dot_expr:d SEMI:s {:
+          RESULT = new CallStatement(s.line, s.pos, d.getExp(), d.getId(), d.getArgs());:}
+        ;
+
+
+dot_expr ::=
+ exp:e DOT:d identifier:id LPAREN call_param:p RPAREN {:
+    RESULT = new CallExp(d.line, d.pos, e, id.getLexeme(), p);
+   :}
+;
+
+call_param ::=
+   exp:e COMMA call_param:p {:
+p.add(e);
+RESULT = p;
+    :}
+  | exp:e {:
+    ArrayList<IExp> temp = new ArrayList<IExp>();
+    temp.add(e);
+    RESULT = temp;
+    :}
+    | {:ArrayList<IExp> temp = new ArrayList<IExp>();          //Giving it nothing, make an empty list
+      RESULT = temp;:}
+    ;
+
+    exp ::=
+        exp:e LT:op exp:e1 {:
+          RESULT = new LtExp(op.line, op.pos, e, e1);
+          :}
+      |  exp:e AND:op exp:e1
+          {:
+            RESULT = new AndExp(op.line, op.pos, e, e1);
+            :}
+        | NEW:ne identifier:id LPAREN RPAREN
+            {: RESULT = new NewExp(ne.line, ne.pos, id.getLexeme());
+              :}
+        | exp:e EQUAL:op exp:e1
+          {:
+            RESULT = new EqualExp(op.line, op.pos, e, e1);
+            :}
+        | exp:e PLUS:op exp:e1
+          {:
+            RESULT = new PlusExp(op.line, op.pos, e, e1);
+            :}
+        | exp:e MINUS:op exp:e1
+          {:
+            RESULT = new MinusExp(op.line, op.pos, e, e1);
+            :}
+            %prec MINUS
+        | exp:e TIMES:op exp:e1
+          {:
+            RESULT = new MulExp(op.line, op.pos, e, e1);
+            :}
+        | LPAREN BYTE:op RPAREN exp:e
+          {: RESULT = new ByteCast(op.line, op.pos, e); :}
+          %prec TIMES
+        | MINUS:op exp:e
+          {: RESULT = new NegExp(op.line, op.pos, e);:}
+          %prec UMINUS
+        | MEGGYGETPIXEL:op LPAREN exp:e COMMA exp:e2 RPAREN
+          {: RESULT = new MeggyGetPixel(op.line, op.pos, e, e2);:}
+        | MEGGYCHECKBUTTON:op LPAREN exp:e RPAREN
+          {: RESULT = new MeggyCheckButton(op.line, op.pos, e);:}
+        | INT_LITERAL:i
+          {: RESULT = new IntLiteral(i.line, i.pos, i.lexeme, i.value); :}
+        | COLOR_LITERAL:color
+          {: RESULT = new ColorLiteral(color.line, color.pos, color.lexeme, color.value); :}
+        | BUTTON_LITERAL:b
+          {: RESULT = new ButtonLiteral(b.line, b.pos, b.lexeme, b.value); :}
+        | TRUE:t
+          {: RESULT = new TrueLiteral(t.line, t.pos, t.lexeme, t.value);:}
+        | FALSE:f
+          {:RESULT = new FalseLiteral(f.line, f.pos, f.lexeme, f.value); :}
+        | TONE_LITERAL:t
+          {:RESULT = new ToneLiteral(t.line, t.pos, t.lexeme, t.value);:}
+        | NOT:op exp:e
+          {:RESULT = new NotExp(op.line,op.pos, e); :}
+        | LPAREN exp:e RPAREN
+          {: RESULT = e; :}
+        | identifier:id {:
+          RESULT = id;
+          :}
+          | THIS:th {:
+            RESULT = new ThisLiteral(th.line, th.pos, th.lexeme, th.value);
+            :}
+            | dot_expr:d {:RESULT = d;:}
+      /*  | exp:e DOT ID:id LPAREN exp_list RPAREN SEMI {:
+            RESULT = new CallExp(!!!!!!!!!!!!!!);
+      :} */
+          /*| exp:e DOT ID: id LPAREN exp_list RPAREN SEMI  //maybe this one too */
+          /*OR*/
+        /*| exp:e DOT ID:id LPAREN exp_list:list RPAREN {::}  */
+      ;
+/* @Chase, need to add the exp . id ( exp, (exp)?)* from the grammar. It is giving shift/reduce so im gonna not worry about it now and take it out.
+*/
+
+    statement_list ::=
+           statement:s statement_list:s1  {:
+             s1.add(s);
+             RESULT = s1;
+          :}
+          | {:RESULT = new ArrayList<IStatement>();:}
+    ;

@@ -1,0 +1,13 @@
+digraph ASTGraph {
+0 [ label="Program" ];
+1 [ label="MainClass" ];
+0 -> 1
+2 [ label="BlockStatement" ];
+1 -> 2
+3 [ label="MeggyToneStart" ];
+2 -> 3
+4 [ label="ToneLiteral\nMeggy.Tone.C3" ];
+3 -> 4
+5 [ label="IntLiteral\n10" ];
+3 -> 5
+}
