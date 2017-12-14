@@ -89,13 +89,16 @@ public class CheckTypes extends DepthFirstVisitor
 /*
 Start PA2 Grammar Typechecking
 */
+  public void outTopClassDecl(TopClassDecl node) {
+    
+  }
    public void outMeggySetPixel(MeggySetPixel node) {
      Type xexpType = this.mCurrentST.getExpType(node.getXExp());
      Type yexpType = this.mCurrentST.getExpType(node.getYExp());
      Type cexpType = this.mCurrentST.getExpType(node.getColor());
 
 
-     if (xexpType==Type.BYTE && yexpType==Type.BYTE && cexpType==Type.COLOR) {
+     if ((xexpType==Type.BYTE || xexpType == null) && (yexpType==Type.BYTE| yexpType==null) && cexpType==Type.COLOR) {
        this.mCurrentST.setExpType(node, Type.VOID);
      }
      else {
@@ -175,6 +178,7 @@ Start PA3 Grammar Typechecking
     public void outLtExp(LtExp node) {
       Type lexpType = this.mCurrentST.getExpType(node.getLExp());
       Type rexpType = this.mCurrentST.getExpType(node.getRExp());
+
 
       if ((lexpType==Type.INT  || lexpType==Type.BYTE) &&
           (rexpType==Type.INT  || rexpType==Type.BYTE)
@@ -307,9 +311,12 @@ Start PA3 Grammar Typechecking
     }
 
     public void outAssignStatement(AssignStatement node) {
-      //VarSTE temp = (VarSTE) this.mCurrentST.lookup(node.getId());  // should get STE for the left side of equation
-      //System.out.println(temp);
-    }
+
+      }
+
+
+
+
 
     public void outThisExp(ThisLiteral node) {
 
@@ -363,6 +370,10 @@ Start PA3 Grammar Typechecking
  //nada
     }
     public void outCallStatement(CallStatement node) {
+
+    }
+    public void outCallExp(CallExp node) {
+
     }
     public void outFormal(Formal node) {
       mCurrentST.setExpType(node, null); //Look here;
