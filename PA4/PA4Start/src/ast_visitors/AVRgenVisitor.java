@@ -396,6 +396,44 @@ Start PA3 Grammar Typechecking
       );
     }
 
+   public void outAssignStatement(AssignStatement node) {
+     VarSTE temp = (VarSTE) this.st.lookup(node.getId());  // should get STE for the left side of equation
+     //System.out.println(temp.getBase());
+     //System.out.println(temp);
+     System.out.println("temps size is " + temp.getType().getAVRTypeSize());
+     String oneortwo = "";
+     if (temp.getType().getAVRTypeSize() == 2) {
+       oneortwo = "\n\tpop r25\n";
+     }
+     out.println("# assign statement\n" +
+                "\tpop \tr24\n" +
+                oneortwo +
+                "\n\tstd " + temp.getBase() + " + " + temp.getOffset() + ", r24\n"
+     );
+   }
+
+   public void outNewExp(NewExp node) {
+     //do stuff
+   }
+   public void outCallExp(CallExp node) {
+     //do more stuff
+   }
+   public void outIdLiteral(IdLiteral node) {
+     //do stuff
+   }
+   public void outByteType(ByteType node) {
+     //this
+   }
+   public void outVarDecl(VarDecl node) {
+
+   }
+   public void outMethodDecl(MethodDecl node) {
+
+   }
+   public void outTopClassDecl(TopClassDecl node) {
+     
+   }
+
 
 
 

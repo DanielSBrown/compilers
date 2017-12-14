@@ -129,6 +129,8 @@ public class BuildSymTable extends DepthFirstVisitor {
 
    }
 
+
+
    public void outVarDecl(VarDecl node) {
      Type t = s.getExpType(node.getType());
      System.out.println("t is:" + t);
