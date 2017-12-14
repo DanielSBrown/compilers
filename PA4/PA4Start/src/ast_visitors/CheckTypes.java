@@ -370,6 +370,10 @@ Start PA3 Grammar Typechecking
     }
     public void outIdLiteral(IdLiteral node) {
           //might need something here
+          VarSTE id = (VarSTE) this.mCurrentST.lookup(node.getLexeme());
+          Type type;
+          type = (id == null) ?  Type.VOID : id.getType();
+          this.mCurrentST.setExpType(node, type);
     }
 
     public void outToneExp(ToneLiteral node) {
