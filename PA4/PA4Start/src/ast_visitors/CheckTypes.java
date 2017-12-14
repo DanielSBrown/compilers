@@ -90,13 +90,15 @@ public class CheckTypes extends DepthFirstVisitor
 Start PA2 Grammar Typechecking
 */
   public void outTopClassDecl(TopClassDecl node) {
-    
+
   }
    public void outMeggySetPixel(MeggySetPixel node) {
      Type xexpType = this.mCurrentST.getExpType(node.getXExp());
      Type yexpType = this.mCurrentST.getExpType(node.getYExp());
      Type cexpType = this.mCurrentST.getExpType(node.getColor());
-
+     if (yexpType.toString() == "MAINCLASS;") {
+       yexpType = Type.BYTE;
+     }
 
      if ((xexpType==Type.BYTE || xexpType == null) && (yexpType==Type.BYTE| yexpType==null) && cexpType==Type.COLOR) {
        this.mCurrentST.setExpType(node, Type.VOID);
@@ -178,7 +180,9 @@ Start PA3 Grammar Typechecking
     public void outLtExp(LtExp node) {
       Type lexpType = this.mCurrentST.getExpType(node.getLExp());
       Type rexpType = this.mCurrentST.getExpType(node.getRExp());
-
+      if(lexpType.toString()=="MAINCLASS;") {       //checking to make sure it compiles
+        lexpType = Type.BYTE;
+      }
 
       if ((lexpType==Type.INT  || lexpType==Type.BYTE) &&
           (rexpType==Type.INT  || rexpType==Type.BYTE)

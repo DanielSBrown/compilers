@@ -400,7 +400,6 @@ Start PA3 Grammar Typechecking
      VarSTE temp = (VarSTE) this.st.lookup(node.getId());  // should get STE for the left side of equation
      //System.out.println(temp.getBase());
      //System.out.println(temp);
-     System.out.println("temps size is " + temp.getType().getAVRTypeSize());
      String oneortwo = "";
      if (temp.getType().getAVRTypeSize() == 2) {
        oneortwo = "\n\tpop r25\n";
@@ -415,13 +414,28 @@ Start PA3 Grammar Typechecking
    public void outNewExp(NewExp node) {
      //do stuff
    }
+   public void outThisExp(ThisLiteral node) {
+     //do stuff
+   }
+   public void outTrueExp(TrueLiteral node) {
+     //do stuff
+   }
+   public void outFormal(Formal node) {
+     //do stuff
+   }
    public void outCallExp(CallExp node) {
+     //do more stuff
+   }
+   public void outCallStatement(CallStatement node) {
      //do more stuff
    }
    public void outIdLiteral(IdLiteral node) {
      //do stuff
    }
    public void outByteType(ByteType node) {
+     //this
+   }
+   public void outVoidType(VoidType node) {
      //this
    }
    public void outVarDecl(VarDecl node) {
@@ -431,8 +445,9 @@ Start PA3 Grammar Typechecking
 
    }
    public void outTopClassDecl(TopClassDecl node) {
-     
+
    }
+
 
 
 
